@@ -1,4 +1,4 @@
-import style from "./styles/dashboard_left.module.css";
+import style from "./styles/dashboardLeft.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ActivityCard } from "./activityCard";

@@ -1,0 +1,80 @@
+.dashboard_right{
+    display: inline-block;
+    width: 25%;
+    position: absolute; 
+    padding:0px 5% 0 5%;  
+}
+
+.dashboard_header{
+    height: 50px;
+}
+
+.dashboard_header>h2{
+    display: inline-block;
+    width: 60%;
+    padding: 0px 10px;
+    font-weight: 500;
+}
+.header_btns{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    font-size: 1.3rem;
+    text-align: center;
+    border-radius: 50%;
+    padding: 5px;
+    border:.5px solid rgb(202, 202, 252) ;
+}
+
+.all_habits_container{
+    width: 100%;
+    height: auto;
+    border: .5px solid rgb(196, 196, 247);
+    border-radius: 5px;
+    padding-bottom: 10px;
+}
+
+.habit_container{
+    display: block;
+    height: 100px;
+    width: 80%;
+    margin: auto;
+}
+
+.colour_dot{
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: yellow;
+    margin-bottom: -18px;
+}
+
+.habit{
+    display: inline-block;
+    width: 70%;
+    height: 70%;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    padding:2% 5% 2% 5%;
+    margin: 5%;
+    border-left: 5px solid red;
+    /* background-color: red; */
+}
+
+
+
+.habit_name{
+    display: inline-block;
+    width: 75%;
+}
+
+.habit_info{
+    cursor: pointer;
+}
+
+.habit_info>img{
+height: 18px;
+width: 15px;
+padding-top: 2px;
+}

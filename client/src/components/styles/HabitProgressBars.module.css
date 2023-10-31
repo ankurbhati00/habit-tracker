@@ -1,0 +1,35 @@
+.progress_bar_container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.habit_progress{
+    display: flex;
+    padding: 10px 0px;
+}
+
+.colour_dot{
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: red;
+}
+
+.progress_bar{
+    height: 20px;
+    flex-grow: 9;
+    margin: 0px 5%;
+    border-radius: 6px;
+    background-color: rgb(214, 233, 249);
+}
+
+.progress{
+    display: inline-block;
+    height: 100%;
+    border-radius: 6px;
+    background-color: red;
+    width: 60%;
+}

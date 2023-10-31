@@ -2,8 +2,8 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .dashboard_left{
-    margin:3% 10%;
-    width: 55%;
+    width: 60%;
+    display: inline-block;
 }
 
 .dashboard_left_header>h1{
@@ -23,14 +23,12 @@ font-size: 3rem;
     margin-top: 25px;
     display: flex;
     height: 65px;
-    display: flex;
     justify-content: space-between;
 }
 
 .date_range_buttons_container{
     background-color: rgb(240, 240, 253);
     padding: 7px 10px;
-    width: 100%;
     border-radius: 50px;
     width: 70%;
 }

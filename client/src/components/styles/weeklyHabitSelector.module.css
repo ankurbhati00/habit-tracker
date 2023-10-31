@@ -1,0 +1,25 @@
+.weekly_habit_container{
+    padding-top: 20px;
+    width: 100%;
+}
+
+.colour_dot{
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: blue;
+    margin-right: 20px;
+}
+
+.habit_checkbox_container{
+    padding:20px 5px ;
+}
+
+.habit_checkbox{
+    height: 30px;
+    width: 30px;
+    background-color: rgb(223, 238, 251);
+    border-radius: 5px;
+}
+

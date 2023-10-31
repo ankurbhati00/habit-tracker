@@ -1,14 +1,18 @@
 import NavBar from './components/navbar'
 import './App.css'
-import DashboardLeft from './components/dashboard_left'
+import DashboardLeft from './components/dashboardLeft'
+import DashboardRight from './components/dashboardRight'
 function App() {
 
   return (
     <>
       <NavBar />
-      <DashboardLeft />
+      <div className='main_container'>
+        <DashboardLeft />
+        <DashboardRight />
+      </div>
     </>
-  )
+  );
 }
 
 export default App

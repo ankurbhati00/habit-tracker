@@ -7,6 +7,8 @@ import {
   faBarsStaggered,
   faGrip,
 } from "@fortawesome/free-solid-svg-icons";
+import WeeklyHabitSelector from "./WeeklyHabitSelector";
+import HabitProgressBars from "./habitProgressBars";
 
 export function ActivityCard() {
   return (
@@ -36,7 +38,9 @@ export function ActivityCard() {
         </div>
         <div className={style.progress_achived}>78% achived</div>
       </div>
-        <hr/>
+      <hr />
+      <WeeklyHabitSelector />
+      <HabitProgressBars />
     </>
   );
 }
