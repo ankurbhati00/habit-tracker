@@ -35,7 +35,7 @@
 }
 
 .habit_container{
-    display: block;
+    display: flex;
     height: 100px;
     width: 80%;
     margin: auto;
@@ -47,7 +47,7 @@
     width: 15px;
     border-radius: 50%;
     background-color: yellow;
-    margin-bottom: -18px;
+    align-self: center;
 }
 
 .habit{
@@ -74,7 +74,18 @@
 }
 
 .habit_info>img{
-height: 18px;
-width: 15px;
-padding-top: 2px;
+    height: 18px;
+    width: 15px;
+    padding-top: 2px;
+}
+
+.mark_complete_btn{
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid rgb(181, 181, 253);
+    height: 45%;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: rgb(98, 98, 254);
+    border-radius: 2px;
 }

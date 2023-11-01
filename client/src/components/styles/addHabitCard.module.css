@@ -1,0 +1,32 @@
+
+
+.add_habit_container{
+    background-color: rgb(244, 111, 111);
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    width: 35%;
+    height: 88vh;
+    padding: 3%;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.header{
+    border-left: 6px solid red;
+    padding-left: 10px;
+    margin-bottom: 40px;
+}
+
+.header>h1{
+    width: 100%;
+}
+
+.cross_btn{
+    position: absolute;
+    right: 50px;
+    height: 25px;
+    width: 25px;
+    padding: 10px;
+    background-color: rgb(181, 140, 140);
+    border-radius: 50%;
+}
