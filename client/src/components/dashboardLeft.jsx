@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ActivityCard } from "./activityCard";
 
-export default function DashboardLeft() {
+export default function DashboardLeft({ handleAddHabit }) {
   return (
     <section className={style.dashboard_left}>
       <div className={style.dashboard_left_header}>
@@ -18,7 +18,7 @@ export default function DashboardLeft() {
           <button className={style.date_range_button}>Year</button>
           <button className={style.date_range_button}>All Time</button>
         </div>
-        <button className={style.add_habit_btn}>
+        <button className={style.add_habit_btn} onClick={handleAddHabit}>
           <FontAwesomeIcon icon={faPlus} /> Add Habit
         </button>
       </div>
