@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-
+import dotenv from "dotenv";
+dotenv.config();
 async function main() {
   try {
-    const db = await mongoose.connect("mongodb://127.0.0.1:27017/habito_app_db");
+    const db = await mongoose.connect(process.env.mongoUrl);
     console.log("mongoose connected successfuly..");
   } catch (error) {
     console.log("Error in mongoose connect", error);

@@ -1,6 +1,6 @@
-import mongoose from "../config/mongoose/mongoose.config.js";
+import mongoose from "../../config/mongoose/mongoose.config.js";
 
-const userSchema =new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -8,7 +8,7 @@ const userSchema =new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique:true,
+    unique: true,
   },
   password: {
     type: String,
