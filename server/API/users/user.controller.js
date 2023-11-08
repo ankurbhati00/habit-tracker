@@ -42,18 +42,21 @@ class userMethods {
         req.session.user = user.id;
         console.log("sign up successful");
         return res.status(200).json({
+          userId:user.id,
           message: "sign in successfuly",
         });
       }
-      return res.status(403).json({
-        message: "invalid crediantials",
+      return res.status(401).json({
+        message: "invalid password",
       });
     }
+    return res.status(403).json({
+      message: "invalid crediantails",
+    });
   }
 
   //logout
   logOut(req, res) {
-    console.log(req.session);
     req.session.destroy();
     console.log(req.session);
     return res.status(200).json({

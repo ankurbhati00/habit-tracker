@@ -2,8 +2,12 @@ import style from "./styles/dashboardLeft.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ActivityCard } from "./activityCard";
-
+import { useSelector } from "react-redux";
+import { habitsSelector } from "../redux/reducers/habitsWeekly.reducer";
 export default function DashboardLeft({ handleAddHabit }) {
+ const values = useSelector(habitsSelector.selectAll);
+ console.log("values", values);
+
   return (
     <section className={style.dashboard_left}>
       <div className={style.dashboard_left_header}>

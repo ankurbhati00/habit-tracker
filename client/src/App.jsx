@@ -1,22 +1,26 @@
-import NavBar from './components/navbar'
-import './App.css'
-import DashboardLeft from './components/dashboardLeft'
-import DashboardRight from './components/dashboardRight'
-import AddHabitCard from './components/addHabitCard';
-import SignIn from './pages/signIn/signIn';
-import { useState } from 'react';
+import "./App.css";
+import DashboardLeft from "./components/dashboardLeft";
+import DashboardRight from "./components/dashboardRight";
+import AddHabitCard from "./components/addHabitCard";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loadHabits } from "./redux/reducers/habitsWeekly.reducer.js";
+
 function App() {
   const [AddHabitCardView, setAddHabitCardView] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadHabits());
+  }, []);
   const handleAddHabit = () => {
     setAddHabitCardView(!AddHabitCardView);
-  }
-  
-  
+  };
+
   return (
     <>
-      {AddHabitCardView ? <AddHabitCard handleAddHabit={handleAddHabit } />:undefined}
-      <NavBar />
-      <SignIn/>
+      {AddHabitCardView ? (
+        <AddHabitCard handleAddHabit={handleAddHabit} />
+      ) : undefined}
       <div className="main_container">
         <DashboardLeft handleAddHabit={handleAddHabit} />
         <DashboardRight />
@@ -25,4 +29,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

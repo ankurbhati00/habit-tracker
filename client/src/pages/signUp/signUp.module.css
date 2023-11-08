@@ -1,0 +1,93 @@
+.main_container {
+    --main-container-background-colour: #007bff;
+}
+
+
+.main_container {
+    display: inline-block;
+    background-color: var(--main-container-background-colour);
+    height: 92vh;
+    width: 100%;
+}
+
+.container {
+    display: block;
+    height: 85%;
+    width: 35%;
+    margin: auto;
+    background-color: white;
+    padding: 3% 10px 0px 10px;
+    border-radius: 10px;
+}
+
+.container>h1 {
+    text-align: center;
+    font-weight: 500;
+}
+
+.user_input {
+    display: block;
+    height: 40px;
+    width: 70%;
+    margin: 20px auto;
+    background-color: gainsboro;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+
+}
+
+.user_input:focus {
+    outline-color: rgb(213, 172, 252);
+}
+
+.signUp_btn,
+.signUp_with_google {
+    display: block;
+    height: 50px;
+    width: 76%;
+    margin: 20px auto;
+    background-color: rgb(161, 91, 227);
+    color: white;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.forgot_password_text {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: -10px;
+    text-decoration: none;
+    color: rgb(151, 85, 213);
+    font-weight: 600;
+}
+
+.signUp_with_google {
+    background-color: rgb(97, 50, 141);
+}
+
+.google_logo {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-bottom: -8px;
+    margin-right: 10px;
+
+}
+
+.footer_container {
+    display: block;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    font-weight: 600;
+}
+
+.footer_container a {
+    color: red;
+}
