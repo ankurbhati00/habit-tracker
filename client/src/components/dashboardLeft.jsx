@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ActivityCard } from "./activityCard";
 import { useSelector } from "react-redux";
-import { habitsSelector } from "../redux/reducers/habitsWeekly.reducer";
+import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer";
 export default function DashboardLeft({ handleAddHabit }) {
- const values = useSelector(habitsSelector.selectAll);
- console.log("values", values);
+  const values = useSelector(weeklyHabitsSelector.selectAll);
+  console.log("values", values);
 
   return (
     <section className={style.dashboard_left}>

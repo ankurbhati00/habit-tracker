@@ -3,18 +3,18 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import dates from "../data";
+import {habits} from "../data";
 var id = 0;
 const habitsAdapter = createEntityAdapter({
-    selectId: elm => id++,
+  selectId: (elm) => id++,
 });
 
 //load data from api
 export const loadHabits = createAsyncThunk(
   "habits/loadHabits",
-    (_, { dispatch }) => {
-        console.log('dates', dates);
-        return dates;
+  (_, { dispatch }) => {
+    console.log("dates", dates);
+    return dates;
   }
 );
 const habitsSlice = createSlice({

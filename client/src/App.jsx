@@ -4,17 +4,19 @@ import DashboardRight from "./components/dashboardRight";
 import AddHabitCard from "./components/addHabitCard";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { loadHabits } from "./redux/reducers/habitsWeekly.reducer.js";
+import { loadWeeklyHabits } from "./redux/reducers/weeklyHabits.reducer.js";
 
 function App() {
   const [AddHabitCardView, setAddHabitCardView] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadHabits());
+    dispatch(loadWeeklyHabits());
   }, []);
   const handleAddHabit = () => {
     setAddHabitCardView(!AddHabitCardView);
   };
+
+
 
   return (
     <>

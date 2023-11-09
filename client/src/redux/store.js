@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { habitsReducer } from "./reducers/habitsWeekly.reducer";
-
+import { weeklyHabitsReducer } from "./reducers/weeklyHabits.reducer.js";
+import { habitsReducer } from "./reducers/habits.reducer.js";
 
 export const store = configureStore({
   reducer: {
-    habits: habitsReducer,
+    weeklyHabits: weeklyHabitsReducer,
+    habits:habitsReducer,
   },
 });
