@@ -47,27 +47,24 @@ function randomColor() {
 //habits
 export const habits = [
   {
-    id: "1",
     name: "water",
     colour: "#988989",
     started: "mon Nov 06 2023",
-    complete: true,
-    status: "done",
+    completed: true,
+    type: "to-do",
   },
   {
-    id: "2",
     name: "cycling",
     colour: "#678989",
     started: "mon Nov 07 2023",
-    complete: false,
-    status: "done",
+    completed: false,
+    type: "to-do",
   },
   {
-    id: "3",
     name: "reading",
     colour: "#236789",
     started: "mon Nov 09 2023",
-    complete: true,
-    status: "note done",
+    completed: true,
+    type: "not-to-do",
   },
 ];

@@ -1,6 +1,9 @@
 import style from './styles/WeeklyHabitSelector.module.css';
-
-export default function WeeklyHabitSelector() {
+import { useSelector } from 'react-redux';
+import { habitsSelector } from '../redux/reducers/habits.reducer';
+export default function WeeklyHabitSelector({ currentWeek }) {
+  const value = useSelector(habitsSelector.selectAll);
+  // const habits = value.filter((elm)=>elm.started)
   return (
     <table className={style.weekly_habit_container}>
       <thead>

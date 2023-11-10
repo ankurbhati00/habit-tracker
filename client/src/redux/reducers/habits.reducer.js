@@ -13,8 +13,15 @@ const habitsAdapter = createEntityAdapter({
 export const loadHabits = createAsyncThunk(
   "habits/loadHabits",
   (_, { dispatch }) => {
-    console.log("dates", dates);
-    return dates;
+    return habits;
+  }
+);
+
+//add habits
+export const addHabit = createAsyncThunk(
+  "habits/addHabit",
+  (data, { dispatch }) => {
+    return data;
   }
 );
 const habitsSlice = createSlice({
@@ -25,9 +32,16 @@ const habitsSlice = createSlice({
   },
   extraReducers: (builder) => {
     //set loaded data to entity adapter
-    builder.addCase(loadHabits.fulfilled, (state, { payload }) => {
-      habitsAdapter.setMany(state, payload);
-    });
+    builder
+      .addCase(loadHabits.fulfilled, (state, { payload }) => {
+        habitsAdapter.setMany(state, payload);
+      })
+      //add new habits to states
+      .addCase(addHabit.fulfilled, (state, { payload }) => {
+        //add habit to entityAdapter
+        habitsAdapter.addOne(state, payload);
+        console.log('habit data', payload)
+      });
   },
 });
 

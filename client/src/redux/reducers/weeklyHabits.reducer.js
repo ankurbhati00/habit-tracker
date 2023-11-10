@@ -3,31 +3,32 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import {dates} from "../data";
+import { dates } from "../data";
 var id = 0;
 const weeklyHabitsAdapter = createEntityAdapter({
-    selectId: elm => id++,
+  selectId: (elm) => id++,
 });
 
 //load data from api
 export const loadWeeklyHabits = createAsyncThunk(
   "weeklyHabits/loadWeeklyHabits",
   (_, { dispatch }) => {
-    console.log("dates", dates);
     return dates;
   }
 );
+
+
 const weeklyHabitsSlice = createSlice({
   name: "weeklyHabits",
   initialState: weeklyHabitsAdapter.getInitialState(),
-  reducers: {
-    addHabit(state) {},
-  },
+  reducers: {},
   extraReducers: (builder) => {
     //set loaded data to entity adapter
-    builder.addCase(loadWeeklyHabits.fulfilled, (state, { payload }) => {
-      weeklyHabitsAdapter.setMany(state, payload);
-    });
+    builder
+      .addCase(loadWeeklyHabits.fulfilled, (state, { payload }) => {
+        weeklyHabitsAdapter.setMany(state, payload);
+      })
+      
   },
 });
 

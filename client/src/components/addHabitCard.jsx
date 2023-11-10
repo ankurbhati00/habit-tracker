@@ -1,10 +1,40 @@
 import style from "./styles/addHabitCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { addHabit } from "../redux/reducers/habits.reducer.js";
+import { useRef } from "react";
 export default function AddHabitCard({ handleAddHabit }) {
+  const dispatch = useDispatch();
+  const nameRef = useRef();
+  const typeRef = useRef();
+  
+  //add habits to databse and reducers.
+  const addHabitForm = (e) => {
+    e.preventDefault();
+    //specify the habit details
+    const rndmColour = randomColor();
+    const habit = {
+      name: nameRef.current.value,
+      colour: rndmColour,
+      started: String(new Date()).slice(0, 15),
+      completed: false,
+      type: typeRef.current.checked ? "to-do" : "not-to-do",
+    };
+
+    //dispatch the action to add habit to database and entityAdapter
+    dispatch(addHabit(habit));
+    //hide the add habit card
+    handleAddHabit();
+  };
+
   return (
     <div className={style.main_container}>
-      <aside className={style.add_habit_container}>
+      <form
+        className={style.add_habit_container}
+        action="/"
+        onSubmit={addHabitForm}
+      >
         <div className={style.header}>
           <h1>
             Add Habit
@@ -20,12 +50,13 @@ export default function AddHabitCard({ handleAddHabit }) {
         <hr />
         <div className={style.habit_name_container}>
           <h2>Name this habit.</h2>
-          <input type="text" placeholder="Habit name" />
+          <input ref={nameRef} type="text" placeholder="Habit name" required />
         </div>
         <div className={style.habit_type_container}>
           <h2>Habit type</h2>
           <span className={style.habit_type}>
             <input
+              ref={typeRef}
               type="radio"
               defaultChecked
               name="habit_type"
@@ -35,11 +66,27 @@ export default function AddHabitCard({ handleAddHabit }) {
           </span>
           <br />
           <span className={style.habit_type}>
-            <input type="radio" name="habit_type" value="not-to-do" /> Not-To-Do
+            <input type="radio" name="habit_type" value="not-to-do" />
+            Not-To-Do
           </span>
         </div>
         <button className={style.add_habit_btn}>Add Habit</button>
-      </aside>
+      </form>
     </div>
   );
+}
+
+//random colour generater
+function randomColor() {
+  // Generate a random number between 0 and 16777215 (the maximum value of a hex color code).
+  const randomNumber = Math.floor(Math.random() * 16777215);
+
+  // Convert the random number to a hexadecimal string.
+  const hexColorCode = randomNumber.toString(16);
+
+  // Pad the hexadecimal string with leading zeros if necessary.
+  const paddedHexColorCode = hexColorCode.padStart(6, "0");
+
+  // Return the padded hexadecimal color code.
+  return `#${paddedHexColorCode}`;
 }

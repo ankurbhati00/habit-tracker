@@ -15,24 +15,57 @@ import { useEffect, useState } from "react";
 
 export function ActivityCard() {
   const weeks = useSelector(weeklyHabitsSelector.selectAll);
-  //find the current week
-  const currentDate = String(new Date()).slice(0, 15);
-  const currentWeekFound = weeks.find((elm) => elm[currentDate] !== undefined);
-  const [currentWeek, setCurrentWeek] = useState(currentWeekFound);
-  const [currentWeekIndex, setCurrentWeekIndex] = useState(currentWeekIndex);
+  const [currentWeekIndex, setCurrentWeekIndex] = useState();
+  const [currentWeek, setCurrentWeek] = useState(weeks[currentWeekIndex]);
+
   useEffect(() => {
-    let currentWeekIndex = weeks.indexOf(currentWeekFound);
-  console.log('hii')
-  },[currentWeekFound]);
-  
+    //find the current week
+    const currentDate = String(new Date()).slice(0, 15);
+    const currentWeekFound = weeks.find(
+      (elm) => elm[currentDate] !== undefined
+    );
+    let currentIndex = weeks.indexOf(currentWeekFound);
+    //check current week found or not
+    if (currentWeekFound) {
+      setCurrentWeek(currentWeekFound);
+      setCurrentWeekIndex(currentIndex);
+    }
+  }, [weeks]);
+
+  const handleWeeks = (args) => {
+    if (args === "prev") {
+      // check if no weeks present before else change week to next week
+      if (currentWeekIndex <= 0) {
+        setCurrentWeekIndex(currentWeekIndex);
+      } else {
+        setCurrentWeekIndex(currentWeekIndex - 1);
+        setCurrentWeek(weeks[currentWeekIndex - 1]);
+      }
+    } else {
+      // check if no weeks present after else change week to next week
+      if (currentWeekIndex === weeks.length - 1) {
+        setCurrentWeekIndex(currentWeekIndex);
+      } else {
+        setCurrentWeekIndex(currentWeekIndex + 1);
+        setCurrentWeek(weeks[currentWeekIndex + 1]);
+      }
+    }
+  };
+
   return (
     <>
       <div className={style.week_range_container}>
         <div className={style.week_range_btns}>
-          <button className={style.week_decrease_btn}>
+          <button
+            className={style.week_decrease_btn}
+            onClick={() => handleWeeks("prev")}
+          >
             <FontAwesomeIcon icon={faAngleLeft} />
           </button>
-          <button className={style.week_increase_btn}>
+          <button
+            className={style.week_increase_btn}
+            onClick={() => handleWeeks("next")}
+          >
             <FontAwesomeIcon icon={faAngleRight} />
           </button>
         </div>
@@ -56,7 +89,7 @@ export function ActivityCard() {
         <div className={style.progress_achived}>78% achived</div>
       </div>
       <hr />
-      <WeeklyHabitSelector />
+      <WeeklyHabitSelector currentWeek={currentWeek} />
       <HabitProgressBars />
     </>
   );

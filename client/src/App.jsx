@@ -5,12 +5,13 @@ import AddHabitCard from "./components/addHabitCard";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadWeeklyHabits } from "./redux/reducers/weeklyHabits.reducer.js";
-
+import { loadHabits } from "./redux/reducers/habits.reducer.js";
 function App() {
   const [AddHabitCardView, setAddHabitCardView] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadWeeklyHabits());
+    dispatch(loadHabits());
   }, []);
   const handleAddHabit = () => {
     setAddHabitCardView(!AddHabitCardView);

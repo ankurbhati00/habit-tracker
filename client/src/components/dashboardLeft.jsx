@@ -5,8 +5,6 @@ import { ActivityCard } from "./activityCard";
 import { useSelector } from "react-redux";
 import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer";
 export default function DashboardLeft({ handleAddHabit }) {
-  const values = useSelector(weeklyHabitsSelector.selectAll);
-  console.log("values", values);
 
   return (
     <section className={style.dashboard_left}>
