@@ -16,6 +16,14 @@ export const loadWeeklyHabits = createAsyncThunk(
     return dates;
   }
 );
+//mark habits as done not done
+export const markHabit = createAsyncThunk(
+  "weeklyHabits/markHabit",
+  (data, { dispatch }) => {
+    const { weekIndex, habitId, modifiedWeek } = data;
+    return data;
+  }
+);
 
 
 const weeklyHabitsSlice = createSlice({
@@ -28,6 +36,11 @@ const weeklyHabitsSlice = createSlice({
       .addCase(loadWeeklyHabits.fulfilled, (state, { payload }) => {
         weeklyHabitsAdapter.setMany(state, payload);
       })
+      .addCase(markHabit.fulfilled, (state, { payload }) => {
+        // update habit in the week
+        console.log(payload)
+        weeklyHabitsAdapter.updateOne(state, {id:payload.weekIndex, changes:payload.modifiedWeek})
+    });
       
   },
 });

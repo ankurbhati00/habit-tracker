@@ -89,7 +89,7 @@ export function ActivityCard() {
         <div className={style.progress_achived}>78% achived</div>
       </div>
       <hr />
-      <WeeklyHabitSelector currentWeek={currentWeek} />
+      {currentWeek?<WeeklyHabitSelector currentWeek={currentWeek} />:undefined}
       <HabitProgressBars />
     </>
   );

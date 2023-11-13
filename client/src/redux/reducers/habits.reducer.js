@@ -4,9 +4,8 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import {habits} from "../data";
-var id = 0;
 const habitsAdapter = createEntityAdapter({
-  selectId: (elm) => id++,
+  selectId: (elm) => elm.id,
 });
 
 //load data from api
@@ -24,6 +23,7 @@ export const addHabit = createAsyncThunk(
     return data;
   }
 );
+
 const habitsSlice = createSlice({
   name: "habits",
   initialState: habitsAdapter.getInitialState(),
@@ -41,7 +41,8 @@ const habitsSlice = createSlice({
         //add habit to entityAdapter
         habitsAdapter.addOne(state, payload);
         console.log('habit data', payload)
-      });
+      })
+      ;
   },
 });
 

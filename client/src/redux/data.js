@@ -47,6 +47,7 @@ function randomColor() {
 //habits
 export const habits = [
   {
+    id: "aijijfewjf",
     name: "water",
     colour: "#988989",
     started: "mon Nov 06 2023",
@@ -54,13 +55,15 @@ export const habits = [
     type: "to-do",
   },
   {
+    id: "ajiejjriejfjf",
     name: "cycling",
-    colour: "#678989",
-    started: "mon Nov 07 2023",
+    colour: "#556656",
+    started: "mon Nov 29 2023",
     completed: false,
     type: "to-do",
   },
   {
+    id: "hieeueyruy",
     name: "reading",
     colour: "#236789",
     started: "mon Nov 09 2023",
