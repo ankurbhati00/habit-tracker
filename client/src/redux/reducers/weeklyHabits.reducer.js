@@ -4,9 +4,8 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import { dates } from "../data";
-var id = 0;
 const weeklyHabitsAdapter = createEntityAdapter({
-  selectId: (elm) => id++,
+  selectId: (elm) => elm.id,
 });
 
 //load data from api
@@ -20,7 +19,7 @@ export const loadWeeklyHabits = createAsyncThunk(
 export const markHabit = createAsyncThunk(
   "weeklyHabits/markHabit",
   (data, { dispatch }) => {
-    const { weekIndex, habitId, modifiedWeek } = data;
+    const { modifiedWeek, currentWeekId } = data;
     return data;
   }
 );
@@ -38,8 +37,7 @@ const weeklyHabitsSlice = createSlice({
       })
       .addCase(markHabit.fulfilled, (state, { payload }) => {
         // update habit in the week
-        console.log(payload)
-        weeklyHabitsAdapter.updateOne(state, {id:payload.weekIndex, changes:payload.modifiedWeek})
+        weeklyHabitsAdapter.updateOne(state, {id:payload.currentWeekId, changes:payload.modifiedWeek})
     });
       
   },

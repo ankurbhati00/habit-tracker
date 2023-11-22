@@ -17,7 +17,7 @@ export function ActivityCard() {
   const weeks = useSelector(weeklyHabitsSelector.selectAll);
   const [currentWeekIndex, setCurrentWeekIndex] = useState();
   const [currentWeek, setCurrentWeek] = useState(weeks[currentWeekIndex]);
-
+  const [currentView, setCurrentView] = useState("graph"); //set current view and toggle to grid and progress bars
   useEffect(() => {
     //find the current week
     const currentDate = String(new Date()).slice(0, 15);
@@ -74,11 +74,17 @@ export function ActivityCard() {
           {currentWeek?.start.slice(0, 11)} - {currentWeek?.end.slice(0, 11)}
         </div>
         <div className={style.graph_list_btn_conatainer}>
-          <button className={style.graph_btn}>
-            <FontAwesomeIcon icon={faBarsStaggered} />
-          </button>
-          <button className={style.list_btn}>
+          <button
+            className={style.graph_btn}
+            onClick={() => setCurrentView("graph")}
+          >
             <FontAwesomeIcon icon={faGrip} />
+          </button>
+          <button
+            className={style.list_btn}
+            onClick={() => setCurrentView("list")}
+          >
+            <FontAwesomeIcon icon={faBarsStaggered} />
           </button>
         </div>
       </div>
@@ -89,8 +95,12 @@ export function ActivityCard() {
         <div className={style.progress_achived}>78% achived</div>
       </div>
       <hr />
-      {currentWeek?<WeeklyHabitSelector currentWeek={currentWeek} />:undefined}
-      <HabitProgressBars />
+      {currentWeek && currentView == "graph" ? (
+        <WeeklyHabitSelector currentWeek={currentWeek} />
+      ) : undefined}
+      {currentWeek && currentView == "list" ? (
+        <HabitProgressBars currentWeek={currentWeek} />
+      ) : undefined}
     </>
   );
 }

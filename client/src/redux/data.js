@@ -3,6 +3,7 @@ function getDates(start, end) {
   var dt = new Date(start);
   let day = 1;
   let weekdays = {};
+  let id = 0;
   while (dt <= new Date(end)) {
     weekdays[String(dt).slice(0, 15)] = [];
     //set week start date
@@ -11,6 +12,7 @@ function getDates(start, end) {
     }
     if (day === 7) {
       weekdays.end = String(dt).slice(0, 15);
+      weekdays.id = id++;
       arr.push(weekdays);
       weekdays = {};
       day = 0;

@@ -4,7 +4,7 @@ import { habitsSelector } from "../redux/reducers/habits.reducer.js";
 import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer.js";
 import { markHabit } from "../redux/reducers/weeklyHabits.reducer.js";
 export default function WeeklyHabitSelector({ currentWeek }) {
-  console.log(currentWeek)
+  console.log(currentWeek);
   const dispatch = useDispatch();
   const allWeeks = useSelector(weeklyHabitsSelector.selectAll);
   //get all the habits from entity adapter
@@ -24,12 +24,26 @@ export default function WeeklyHabitSelector({ currentWeek }) {
   const habitCheckbox = (e, habitId) => {
     //get the date of habit mark
     const date = e.target.getAttribute("data-markdate");
-    const currentWeekIndex = allWeeks.indexOf(currentWeek);
+
+    //dont mark next days habits
+    if (new Date().getTime() < new Date(date).getTime()) {
+      return;
+    }
+    const currentWeekId = currentWeek.id;
     let modifiedWeek = { ...currentWeek };
-    modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
-    dispatch(markHabit({habitId, modifiedWeek, currentWeekIndex}))
-    
-    
+    //toggle the mark
+    if (modifiedWeek[date].includes(habitId)) {
+      //if habit is present
+      let i = modifiedWeek[date].indexOf(habitId);
+      let tempArr = [...modifiedWeek[date]];
+      tempArr.splice(i, 1);
+      modifiedWeek[date] = tempArr;
+      dispatch(markHabit({ modifiedWeek, currentWeekId }));
+    } else {
+      //habit is not present
+      modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
+      dispatch(markHabit({ modifiedWeek, currentWeekId }));
+    }
   };
   return (
     <table className={style.weekly_habit_container}>
@@ -63,6 +77,11 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[0]}
+                style={
+                  currentWeek[days[0]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
             <td className={style.habit_checkbox_container}>
@@ -70,6 +89,11 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[2]}
+                style={
+                  currentWeek[days[2]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
             <td className={style.habit_checkbox_container}>
@@ -77,6 +101,11 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[3]}
+                style={
+                  currentWeek[days[3]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
             <td className={style.habit_checkbox_container}>
@@ -84,6 +113,11 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[4]}
+                style={
+                  currentWeek[days[4]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
             <td className={style.habit_checkbox_container}>
@@ -91,6 +125,11 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[5]}
+                style={
+                  currentWeek[days[5]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
             <td className={style.habit_checkbox_container}>
@@ -98,6 +137,11 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[6]}
+                style={
+                  currentWeek[days[6]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
             <td className={style.habit_checkbox_container}>
@@ -105,9 +149,26 @@ export default function WeeklyHabitSelector({ currentWeek }) {
                 className={style.habit_checkbox}
                 onClick={(e) => habitCheckbox(e, habit.id)}
                 data-markdate={days[7]}
+                style={
+                  currentWeek[days[7]].includes(habit.id)
+                    ? { backgroundColor: "#579f57" }
+                    : undefined
+                }
               ></div>
             </td>
-            <td className={style.habit_frequency}>2/2</td>
+            <td className={style.habit_frequency}>
+              {/* count how many days habit is done */}
+              {(() => {
+                let count = 0;
+                for (let arr of Object.values(currentWeek)) {
+                  if (typeof arr == "object" && arr.includes(habit.id)) {
+                    count++;
+                  }
+                }
+                return count;
+              })()}
+              /7
+            </td>
           </tr>
         ))}
       </tbody>
