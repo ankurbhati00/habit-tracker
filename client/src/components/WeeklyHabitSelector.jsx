@@ -11,6 +11,7 @@ export default function WeeklyHabitSelector({ currentWeek }) {
   const value = useSelector(habitsSelector.selectAll);
   const days = Object.keys(currentWeek);
   let date1 = new Date(currentWeek.end).getTime();
+  //filter the habits which is created before this week
   const habits = value.filter((elm) => {
     // habits start date
     let date2 = new Date(elm.started).getTime();
@@ -44,6 +45,17 @@ export default function WeeklyHabitSelector({ currentWeek }) {
       modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
       dispatch(markHabit({ modifiedWeek, currentWeekId }));
     }
+  };
+
+  //count days of habit that how many days habit is done
+  const countDay = (habitId) => {
+    let count = 0;
+    for (let arr of Object.values(currentWeek)) {
+      if (typeof arr == "object" && arr.includes(habitId)) {
+        count++;
+      }
+    }
+    return count;
   };
   return (
     <table className={style.weekly_habit_container}>
@@ -158,16 +170,7 @@ export default function WeeklyHabitSelector({ currentWeek }) {
             </td>
             <td className={style.habit_frequency}>
               {/* count how many days habit is done */}
-              {(() => {
-                let count = 0;
-                for (let arr of Object.values(currentWeek)) {
-                  if (typeof arr == "object" && arr.includes(habit.id)) {
-                    count++;
-                  }
-                }
-                return count;
-              })()}
-              /7
+              {`${countDay(habit.id)}/7`}
             </td>
           </tr>
         ))}

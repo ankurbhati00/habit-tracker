@@ -12,12 +12,16 @@ import HabitProgressBars from "./habitProgressBars";
 import { useSelector } from "react-redux";
 import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer";
 import { useEffect, useState } from "react";
+import { habitsSelector } from "../redux/reducers/habits.reducer";
 
 export function ActivityCard() {
   const weeks = useSelector(weeklyHabitsSelector.selectAll);
   const [currentWeekIndex, setCurrentWeekIndex] = useState();
   const [currentWeek, setCurrentWeek] = useState(weeks[currentWeekIndex]);
   const [currentView, setCurrentView] = useState("graph"); //set current view and toggle to grid and progress bars
+
+  const allHabits = useSelector(habitsSelector.selectAll);
+
   useEffect(() => {
     //find the current week
     const currentDate = String(new Date()).slice(0, 15);
@@ -31,6 +35,17 @@ export function ActivityCard() {
       setCurrentWeekIndex(currentIndex);
     }
   }, [weeks]);
+
+  //filter the habits which is created before and within this week
+  // let date1 = new Date(currentWeek?.end).getTime();
+  // const habits = allHabits.filter((elm) => {
+  //   // habits start date
+  //   let date2 = new Date(elm.started).getTime();
+  //   if (date2 <= date1) {
+  //     return true;
+  //   }
+  //   return false;
+  // });
 
   const handleWeeks = (args) => {
     if (args === "prev") {
@@ -52,6 +67,17 @@ export function ActivityCard() {
     }
   };
 
+  //check the habits goal achived in a week
+  // const habitsAchived = () => {
+  //   //total days of habits to done or not done
+  //   const totalDays = habits.length * 7;
+  //   let markDays = 0;
+  //   for (let arr in Object.values(currentWeek)) {
+  //     markDays += arr.length;
+  //   }
+  //   console.log("total days " + totalDays + "markdays " + markDays);
+  // };
+  // habitsAchived();
   return (
     <>
       <div className={style.week_range_container}>
@@ -77,24 +103,30 @@ export function ActivityCard() {
           <button
             className={style.graph_btn}
             onClick={() => setCurrentView("graph")}
+            style={
+              currentView == "graph" ? { backgroundColor: "white" } : undefined
+            }
           >
             <FontAwesomeIcon icon={faGrip} />
           </button>
           <button
             className={style.list_btn}
             onClick={() => setCurrentView("list")}
+            style={
+              currentView == "list" ? { backgroundColor: "white" } : undefined
+            }
           >
             <FontAwesomeIcon icon={faBarsStaggered} />
           </button>
         </div>
       </div>
-      <div className={style.overoll_progress_bar_container}>
+      {/* <div className={style.overoll_progress_bar_container}>
         <div className={style.progress_bar}>
           <div className={style.progress}></div>
         </div>
         <div className={style.progress_achived}>78% achived</div>
-      </div>
-      <hr />
+      </div> */}
+      <hr style={{marginTop:'15px'}}/>
       {currentWeek && currentView == "graph" ? (
         <WeeklyHabitSelector currentWeek={currentWeek} />
       ) : undefined}

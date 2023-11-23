@@ -2,9 +2,36 @@ import { useSelector } from "react-redux";
 import style from "./styles/HabitProgressBars.module.css";
 import { habitsSelector } from "../redux/reducers/habits.reducer";
 export default function HabitProgressBars({ currentWeek }) {
-  const habits = useSelector(habitsSelector.selectAll);
+const allHabits = useSelector(habitsSelector.selectAll);
+//filter the habits which is created before this week
+let date1 = new Date(currentWeek.end).getTime();
+const habits = allHabits.filter((elm) => {
+  // habits start date
+  let date2 = new Date(elm.started).getTime();
+  if (date2 <= date1) {
+    return true;
+  }
+  return false;
+});
 
 
+
+//count the days of habit that how many days habit is done
+  const countDay = (habitId) => {
+  let count = 0;
+  for (let arr of Object.values(currentWeek)) {
+    if (typeof arr == "object" && arr.includes(habitId)) {
+      count++;
+    }
+  }
+  return count;
+  }
+  
+  //track the progress of habit in presentage
+  const progress = (habitId) => {
+    let days = countDay(habitId);
+    return ( days/ 7) * 100;
+  }
 
   return (
     <div className={style.progress_bar_container}>
@@ -15,20 +42,12 @@ export default function HabitProgressBars({ currentWeek }) {
             <span>{habit.name}</span>
           </div>
           <div className={style.progress_bar}>
-            <div className={style.progress}></div>
+            <div className={style.progress}
+              style={{width:`${progress(habit.id)}%`}}></div>
           </div>
           <div>
-            {/* count how many days habit is done */}
-            {(() => {
-              let count = 0;
-              for (let arr of Object.values(currentWeek)) {
-                if (typeof arr == "object" && arr.includes(habit.id)) {
-                  count++;
-                }
-              }
-              return count;
-            })()}
-            /7
+            {/* show the habit progress */}
+            {`${countDay(habit.id)}/7`}
           </div>
         </div>
       ))}

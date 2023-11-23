@@ -35,10 +35,10 @@
     width: 50%;
     font-size: 1.3rem;
     border: none;
-    background-color: white;
+    background-color: transparent;
     border-radius: 50px;
     cursor: pointer;
-}
+}                                                       
 /* progress bar for activity */
 .overoll_progress_bar_container{
     margin-top: 30px;
