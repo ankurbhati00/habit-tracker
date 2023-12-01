@@ -1,4 +1,4 @@
-import style from "./styles/ActivityCard.module.css";
+import style from "./styles/weeklyActivityCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -8,13 +8,13 @@ import {
   faGrip,
 } from "@fortawesome/free-solid-svg-icons";
 import WeeklyHabitSelector from "./WeeklyHabitSelector";
-import HabitProgressBars from "./habitProgressBars";
+import WeeklyProgressBars from "./weeklyProgressBars";
 import { useSelector } from "react-redux";
 import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer";
 import { useEffect, useState } from "react";
 import { habitsSelector } from "../redux/reducers/habits.reducer";
 
-export function ActivityCard() {
+export function WeeklyActivityCard() {
   const weeks = useSelector(weeklyHabitsSelector.selectAll);
   const [currentWeekIndex, setCurrentWeekIndex] = useState();
   const [currentWeek, setCurrentWeek] = useState(weeks[currentWeekIndex]);
@@ -126,12 +126,12 @@ export function ActivityCard() {
         </div>
         <div className={style.progress_achived}>78% achived</div>
       </div> */}
-      <hr style={{marginTop:'15px'}}/>
+      <hr style={{ marginTop: "15px" }} />
       {currentWeek && currentView == "graph" ? (
         <WeeklyHabitSelector currentWeek={currentWeek} />
       ) : undefined}
       {currentWeek && currentView == "list" ? (
-        <HabitProgressBars currentWeek={currentWeek} />
+        <WeeklyProgressBars currentWeek={currentWeek} />
       ) : undefined}
     </>
   );

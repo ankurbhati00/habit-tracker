@@ -29,7 +29,10 @@ const start = new Date(
   today.getMonth(),
   today.getDate() - (today.getDay() - 1)
 );
-export const dates = getDates(start, new Date(today.getFullYear() + 2, 0, 1));
+export const dates = getDates(
+  start,
+  new Date(today.getFullYear() + 1, today.getMonth()-1, 1)
+);
 
 //random color code function
 function randomColor() {
