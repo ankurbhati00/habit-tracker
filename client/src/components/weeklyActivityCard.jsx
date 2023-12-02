@@ -57,13 +57,16 @@ export function WeeklyActivityCard() {
         setCurrentWeek(weeks[currentWeekIndex - 1]);
       }
     } else {
-      // check if no weeks present after else change week to next week
-      if (currentWeekIndex === weeks.length - 1) {
-        setCurrentWeekIndex(currentWeekIndex);
-      } else {
-        setCurrentWeekIndex(currentWeekIndex + 1);
-        setCurrentWeek(weeks[currentWeekIndex + 1]);
+      //dont go next week no sense to go next week
+      const currentDate = String(new Date()).slice(0, 15);
+      console.log(weeks[currentWeekIndex][currentDate]);
+      if (weeks[currentWeekIndex][currentDate] !== undefined) {
+        return;
       }
+      // check if no weeks present after else change week to next week
+
+      setCurrentWeekIndex(currentWeekIndex + 1);
+      setCurrentWeek(weeks[currentWeekIndex + 1]);
     }
   };
 

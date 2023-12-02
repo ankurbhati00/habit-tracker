@@ -1,48 +1,99 @@
 import style from "./styles/dashboardRight.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { HabitCard } from "./habitCard";
+import { useDispatch, useSelector } from "react-redux";
+import { habitsSelector } from "../redux/reducers/habits.reducer";
 import {
-  faAngleLeft,
-  faAngleRight,
-  faEllipsisVertical,
-} from "@fortawesome/free-solid-svg-icons";
-import fire_png from "../assets/streaks_fire.png";
+  markHabit,
+  weeklyHabitsSelector,
+} from "../redux/reducers/weeklyHabits.reducer.js";
+import { useEffect, useState } from "react";
+
 export default function DashboardRight() {
+  const allHabits = useSelector(habitsSelector.selectAll);
+  const [currentDate, setCurrentDate] = useState(null);
+  const [currentDay, setCurrentDay] = useState();
+  const [currentMonth, setCurrentMonth] = useState();
+  const [currentWeek, setCurrentWeek] = useState({});
+  const weeklyHabits = useSelector(weeklyHabitsSelector.selectAll);
+  const dispatch = useDispatch();
+  //set current date initially
+  useEffect(() => {
+    const date = new Date();
+    setCurrentDay(date.getDate());
+    setCurrentMonth(date.getMonth());
+    setCurrentDate(String(date).slice(0, 15));
+  }, []);
+
+  //set current week
+  useEffect(() => {
+    const week = weeklyHabits.find((e) => {
+      if (e[currentDate] !== undefined) return true;
+      else return false;
+    });
+    setCurrentWeek(week);
+  }, [currentDate]);
+
+  //slide date
+  const slideDate = (action) => {
+    const date = new Date(currentDate);
+    
+    if (action === "next") {
+      //check if current date is 
+      if (date.getMonth() >= new Date().getMonth()) {
+        return;
+      }
+      const newDate = new Date(
+        date.getFullYear(),
+        currentMonth,
+        currentDay + 1
+      );
+      setCurrentDate(String(newDate).slice(0, 15));
+      setCurrentDay(currentDay + 1);
+    } else if (action === "prev") {
+      //check if current date is before user initialy set weeklyHabits
+      if (date <= new Date(weeklyHabits[0].start)) {
+        return;
+      }
+      //else
+      const newDate = new Date(
+        date.getFullYear(),
+        currentMonth,
+        currentDay - 1
+      );
+      setCurrentDate(String(newDate).slice(0, 15));
+      setCurrentDay(currentDay - 1);
+    }
+  };
+
+  //mark habit as done
+  const markHabitFunc = (currentWeek, habitId) => {
+    //mark the habit
+    
+    dispatch(markHabit({ currentWeek, date: currentDate, habitId }));
+  };
+
   return (
     <aside className={style.dashboard_right}>
       <div className={style.dashboard_header}>
-        <h2>Tue, Oct 12</h2>
-        <span className={style.header_btns}>
+        <h2>{String(currentDate).slice(0, 10)}</h2>
+        <span className={style.header_btns} onClick={() => slideDate("prev")}>
           <FontAwesomeIcon icon={faAngleLeft} />
         </span>
-        <span className={style.header_btns}>
+        <span className={style.header_btns} onClick={() => slideDate("next")}>
           <FontAwesomeIcon icon={faAngleRight} />
         </span>
       </div>
       {/* right side habits card */}
       <div className={style.all_habits_container}>
-        <div className={style.habit_container}>
-          <div className={style.colour_dot}></div>
-          <div className={style.habit}>
-            <span className={style.habit_name}>water</span>
-            <span className={style.habit_info}>
-              2&nbsp; <img src={fire_png} />
-              &nbsp; <FontAwesomeIcon icon={faEllipsisVertical} />
-            </span>
-            <button className={style.mark_complete_btn}>Mark Complete</button>
-          </div>
-        </div>
-
-        <div className={style.habit_container}>
-          <div className={style.colour_dot}></div>
-          <div className={style.habit}>
-            <span className={style.habit_name}>water</span>
-            <span className={style.habit_info}>
-              2&nbsp; <img src={fire_png} />
-              &nbsp; <FontAwesomeIcon icon={faEllipsisVertical} />
-            </span>
-            <button className={style.mark_complete_btn}>Mark Complete</button>
-          </div>
-        </div>
+        {allHabits.map((h) => (
+          <HabitCard
+            habit={h}
+            markHabitFunc={markHabitFunc}
+            currentDate={currentDate}
+          />
+        ))}
       </div>
     </aside>
   );

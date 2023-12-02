@@ -4,7 +4,6 @@ import { habitsSelector } from "../redux/reducers/habits.reducer.js";
 import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer.js";
 import { markHabit } from "../redux/reducers/weeklyHabits.reducer.js";
 export default function WeeklyHabitSelector({ currentWeek }) {
-  console.log(currentWeek);
   const dispatch = useDispatch();
   const allWeeks = useSelector(weeklyHabitsSelector.selectAll);
   //get all the habits from entity adapter
@@ -30,21 +29,8 @@ export default function WeeklyHabitSelector({ currentWeek }) {
     if (new Date().getTime() < new Date(date).getTime()) {
       return;
     }
-    const currentWeekId = currentWeek.id;
-    let modifiedWeek = { ...currentWeek };
-    //toggle the mark
-    if (modifiedWeek[date].includes(habitId)) {
-      //if habit is present
-      let i = modifiedWeek[date].indexOf(habitId);
-      let tempArr = [...modifiedWeek[date]];
-      tempArr.splice(i, 1);
-      modifiedWeek[date] = tempArr;
-      dispatch(markHabit({ modifiedWeek, currentWeekId }));
-    } else {
-      //habit is not present
-      modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
-      dispatch(markHabit({ modifiedWeek, currentWeekId }));
-    }
+
+    dispatch(markHabit({ currentWeek, date, habitId }));
   };
 
   //count days of habit that how many days habit is done
@@ -58,7 +44,7 @@ export default function WeeklyHabitSelector({ currentWeek }) {
     return count;
   };
   return (
-    <table className={style.weekly_habit_container}>
+    <table className={style.weekly_habit_container} >
       <thead>
         <tr>
           <td></td>
@@ -72,7 +58,7 @@ export default function WeeklyHabitSelector({ currentWeek }) {
           <td></td>
         </tr>
       </thead>
-      <tbody>
+      <tbody >
         {/* list all the habits to the container */}
         {habits.map((habit) => (
           <tr key={habit.start} className={style.habit_container}>
@@ -175,6 +161,7 @@ export default function WeeklyHabitSelector({ currentWeek }) {
           </tr>
         ))}
       </tbody>
+      <tfoot></tfoot>
     </table>
   );
 }

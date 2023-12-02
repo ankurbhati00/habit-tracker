@@ -18,12 +18,24 @@ export const loadWeeklyHabits = createAsyncThunk(
 //mark habits as done not done
 export const markHabit = createAsyncThunk(
   "weeklyHabits/markHabit",
-  (data, { dispatch }) => {
-    const { modifiedWeek, currentWeekId } = data;
-    return data;
+  ({ currentWeek, date, habitId }, { dispatch }) => {
+    const currentWeekId = currentWeek.id;
+    let modifiedWeek = { ...currentWeek };
+    //toggle the mark
+    if (modifiedWeek[date].includes(habitId)) {
+      //if habit is present
+      let i = modifiedWeek[date].indexOf(habitId);
+      let tempArr = [...modifiedWeek[date]];
+      tempArr.splice(i, 1);
+      modifiedWeek[date] = tempArr;
+      return { modifiedWeek, currentWeekId };
+    } else {
+      //habit is not present
+      modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
+      return { modifiedWeek, currentWeekId };
+    }
   }
 );
-
 
 const weeklyHabitsSlice = createSlice({
   name: "weeklyHabits",
@@ -37,9 +49,11 @@ const weeklyHabitsSlice = createSlice({
       })
       .addCase(markHabit.fulfilled, (state, { payload }) => {
         // update habit in the week
-        weeklyHabitsAdapter.updateOne(state, {id:payload.currentWeekId, changes:payload.modifiedWeek})
-    });
-      
+        weeklyHabitsAdapter.updateOne(state, {
+          id: payload.currentWeekId,
+          changes: payload.modifiedWeek,
+        });
+      });
   },
 });
 

@@ -40,7 +40,6 @@ const habitsSlice = createSlice({
       .addCase(addHabit.fulfilled, (state, { payload }) => {
         //add habit to entityAdapter
         habitsAdapter.addOne(state, payload);
-        console.log('habit data', payload)
       })
       ;
   },

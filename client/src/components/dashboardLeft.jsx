@@ -3,8 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { WeeklyActivityCard } from "./weeklyActivityCard";
 import { MonthlyActivityCard } from "./monthlyActivityCard";
-import { useSelector } from "react-redux";
-import { weeklyHabitsSelector } from "../redux/reducers/weeklyHabits.reducer";
 import { useState } from "react";
 export default function DashboardLeft({ handleAddHabit }) {
   const [currentView, setCurrentView] = useState("week");
