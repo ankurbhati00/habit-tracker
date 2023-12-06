@@ -3,24 +3,35 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import {habits} from "../data";
+import { habits } from "../data";
 const habitsAdapter = createEntityAdapter({
-  selectId: (elm) => elm.id,
+  selectId: (elm) => elm._id,
 });
 
 //load data from api
 export const loadHabits = createAsyncThunk(
   "habits/loadHabits",
-  (_, { dispatch }) => {
-    return habits;
+  async (_, { dispatch }) => {
+    const response = await fetch("http://localhost:8000/habits");
+    const data = await response.json();
+    return data.habits;
   }
 );
 
 //add habits
 export const addHabit = createAsyncThunk(
   "habits/addHabit",
-  (data, { dispatch }) => {
-    return data;
+  async (data, { dispatch }) => {
+    const response = await fetch("http://localhost:8000/habits/add", {
+      method: "post",
+      body: JSON.stringify(data),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const {habit} = await response.json();
+
+    return habit;
   }
 );
 
@@ -39,9 +50,10 @@ const habitsSlice = createSlice({
       //add new habits to states
       .addCase(addHabit.fulfilled, (state, { payload }) => {
         //add habit to entityAdapter
-        habitsAdapter.addOne(state, payload);
-      })
-      ;
+        console.log(payload);
+          habitsAdapter.addOne(state, payload);
+        
+      });
   },
 });
 

@@ -13,12 +13,9 @@ export default function AddHabitCard({ handleAddHabit }) {
   const addHabitForm = (e) => {
     e.preventDefault();
     //specify the habit details
-    const rndmColour = randomColor();
     const habit = {
       name: nameRef.current.value,
-      colour: rndmColour,
       started: String(new Date()).slice(0, 15),
-      completed: false,
       type: typeRef.current.checked ? "to-do" : "not-to-do",
     };
 
@@ -50,7 +47,7 @@ export default function AddHabitCard({ handleAddHabit }) {
         <hr />
         <div className={style.habit_name_container}>
           <h2>Name this habit.</h2>
-          <input ref={nameRef} type="text" placeholder="Habit name" required />
+          <input ref={nameRef}  type="text" placeholder="Habit name" required />
         </div>
         <div className={style.habit_type_container}>
           <h2>Habit type</h2>
@@ -74,19 +71,4 @@ export default function AddHabitCard({ handleAddHabit }) {
       </form>
     </div>
   );
-}
-
-//random colour generater
-function randomColor() {
-  // Generate a random number between 0 and 16777215 (the maximum value of a hex color code).
-  const randomNumber = Math.floor(Math.random() * 16777215);
-
-  // Convert the random number to a hexadecimal string.
-  const hexColorCode = randomNumber.toString(16);
-
-  // Pad the hexadecimal string with leading zeros if necessary.
-  const paddedHexColorCode = hexColorCode.padStart(6, "0");
-
-  // Return the padded hexadecimal color code.
-  return `#${paddedHexColorCode}`;
 }

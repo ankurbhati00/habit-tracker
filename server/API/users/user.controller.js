@@ -1,8 +1,10 @@
 import { User } from "./user.modal.js";
+import { weeks } from "./getWeeks.js";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
 class userMethods {
   constructor() {}
+
   //create new user to data base
   async SignUp(req, res) {
     //check if already present or not
@@ -21,6 +23,7 @@ class userMethods {
       name: req.body.name,
       email: req.body.email,
       password: hashPassword,
+      weeks:weeks
     }).catch((err) => console.log(err));
     console.log("sign up successfull");
     return res.status(200).send({
@@ -40,10 +43,15 @@ class userMethods {
         // console.log(user, match);
         //set the sessions
         req.session.user = user.id;
-        console.log("sign up successful");
+        req.session.authorized = true;
+        // req.session.save();
+        console.log("sign in successful", req.session);
         return res.status(200).json({
-          userId:user.id,
-          message: "sign in successfuly",
+          userId: user.id,
+          name: user.name,
+          bedTime: user.bedTime,
+          weeks:user.weeks,
+          message: "sign in successfuly"
         });
       }
       return res.status(401).json({
@@ -61,6 +69,28 @@ class userMethods {
     console.log(req.session);
     return res.status(200).json({
       message: "log out successfull",
+    });
+  }
+
+  //fetch user if already loged in on user router
+  async authUser(req, res) {
+    console.log(req.cookies);
+    console.log(req.session);
+    if (req.session.user) {
+      //check user data and send back
+      const user = await User.findById(req.session.user).catch((err) =>
+        console.log(err)
+      );
+      if (user) {
+        return res.status(200).json({
+          name: user.name,
+          userId: user.id,
+          bedTime: user.bedTime,
+        });
+      }
+    }
+    return res.status(404).json({
+      message: "User not found.",
     });
   }
 }

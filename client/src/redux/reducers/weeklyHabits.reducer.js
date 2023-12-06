@@ -8,13 +8,7 @@ const weeklyHabitsAdapter = createEntityAdapter({
   selectId: (elm) => elm.id,
 });
 
-//load data from api
-export const loadWeeklyHabits = createAsyncThunk(
-  "weeklyHabits/loadWeeklyHabits",
-  (_, { dispatch }) => {
-    return dates;
-  }
-);
+
 //mark habits as done not done
 export const markHabit = createAsyncThunk(
   "weeklyHabits/markHabit",
@@ -40,20 +34,20 @@ export const markHabit = createAsyncThunk(
 const weeklyHabitsSlice = createSlice({
   name: "weeklyHabits",
   initialState: weeklyHabitsAdapter.getInitialState(),
-  reducers: {},
+  reducers: {
+    setWeeks: (state, { payload }) => {
+      //set loaded data to entity adapter
+      weeklyHabitsAdapter.setMany(state, payload);
+    },
+  },
   extraReducers: (builder) => {
-    //set loaded data to entity adapter
-    builder
-      .addCase(loadWeeklyHabits.fulfilled, (state, { payload }) => {
-        weeklyHabitsAdapter.setMany(state, payload);
-      })
-      .addCase(markHabit.fulfilled, (state, { payload }) => {
-        // update habit in the week
-        weeklyHabitsAdapter.updateOne(state, {
-          id: payload.currentWeekId,
-          changes: payload.modifiedWeek,
-        });
+    builder.addCase(markHabit.fulfilled, (state, { payload }) => {
+      // update habit in the week
+      weeklyHabitsAdapter.updateOne(state, {
+        id: payload.currentWeekId,
+        changes: payload.modifiedWeek,
       });
+    });
   },
 });
 
@@ -61,4 +55,6 @@ const weeklyHabitsSlice = createSlice({
 export const weeklyHabitsSelector = weeklyHabitsAdapter.getSelectors(
   (state) => state.weeklyHabits
 );
+//actions 
+export const weeklyHabitsActions = weeklyHabitsSlice.actions;
 export const weeklyHabitsReducer = weeklyHabitsSlice.reducer;
