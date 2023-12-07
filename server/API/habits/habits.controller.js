@@ -6,7 +6,6 @@ class controller {
   //fetch all habits from db
   async allHabits(req, res) {
     const habits = await Habits.find({userId:req.body.userId}).catch((err) => console.log(err));
-console.log(habits, req.body.userId)
     return res.status(200).json({
       habits,
     });

@@ -2,12 +2,17 @@ import style from "./signIn.module.css";
 import google_logo from "../../assets/google_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { signInUser, userSelector } from "../../redux/reducers/user.reducer.js";
+import {
+  fetchUser,
+  signInUser,
+  userSelector,
+} from "../../redux/reducers/user.reducer.js";
 import { useEffect } from "react";
 export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(userSelector);
+
   //handle sign in
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +20,15 @@ export default function SignIn() {
     const password = e.target.password.value;
     dispatch(signInUser({ email, password }));
   };
+  //fetch is user loged in or not
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
 
+  //if loged in redirect to home
   useEffect(() => {
     if (user.logedin) {
       navigate("/");
-      console.log("logedIn:", user);
     }
   }, [user]);
   return (

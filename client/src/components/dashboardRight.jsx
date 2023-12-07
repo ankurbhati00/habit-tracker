@@ -92,6 +92,7 @@ export default function DashboardRight() {
       <div className={style.all_habits_container}>
         {allHabits.map((h) => (
           <HabitCard
+            key={h._id}
             habit={h}
             markHabitFunc={markHabitFunc}
             currentDate={currentDate}

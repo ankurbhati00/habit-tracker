@@ -35,6 +35,8 @@ class userMethods {
   //sign up user
   async SignIn(req, res) {
     //find the user into db
+    console.log(req.sessionID,"login");
+
     const user = await User.findOne({ email: req.body.email });
     //match the hashed password from db
     if (user) {
@@ -64,16 +66,17 @@ class userMethods {
   }
 
   //logout
-  logOut(req, res) {
-    req.session.destroy();
+  async logOut(req, res) {
+   req.session.destroy();
     return res.status(200).json({
       message: "log out successfull",
+      
     });
   }
 
   //fetch user if already loged in on user router
   async authUser(req, res) {
-    
+    console.log(req.sessionID,"authUser");
     if (req.session.user) {
       //check user data and send back
       const user = await User.findById(req.session.user).catch((err) =>
@@ -81,6 +84,7 @@ class userMethods {
       );
       if (user) {
         return res.status(200).json({
+          weeks:user.weeks,
           name: user.name,
           userId: user.id,
           bedTime: user.bedTime,

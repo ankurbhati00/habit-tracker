@@ -5,7 +5,7 @@ import { markHabit } from "../redux/reducers/weeklyHabits.reducer.js";
 import { userSelector } from "../redux/reducers/user.reducer.js";
 export default function WeeklyHabitSelector({ currentWeek }) {
   const dispatch = useDispatch();
-  const {userId} = useSelector(userSelector);
+  const { userId } = useSelector(userSelector);
   //get all the habits from entity adapter
   const value = useSelector(habitsSelector.selectAll);
   const days = Object.keys(currentWeek);
@@ -41,11 +41,10 @@ export default function WeeklyHabitSelector({ currentWeek }) {
         count++;
       }
     }
-    console.log(count)
     return count;
   };
   return (
-    <table className={style.weekly_habit_container} >
+    <table className={style.weekly_habit_container}>
       <thead>
         <tr>
           <td></td>
@@ -59,10 +58,10 @@ export default function WeeklyHabitSelector({ currentWeek }) {
           <td></td>
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         {/* list all the habits to the container */}
         {habits.map((habit) => (
-          <tr key={habit.start} className={style.habit_container}>
+          <tr key={habit._id} className={style.habit_container}>
             <td>
               <span
                 className={style.colour_dot}

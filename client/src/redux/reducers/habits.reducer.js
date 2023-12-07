@@ -19,7 +19,6 @@ export const loadHabits = createAsyncThunk(
         "content-type": "application/json",
       },
     });
-    console.log("loadhabits", response);
     const data = await response.json();
     return data.habits;
   }
@@ -77,7 +76,6 @@ const habitsSlice = createSlice({
       //add new habits to states
       .addCase(addHabit.fulfilled, (state, { payload }) => {
         //add habit to entityAdapter
-        console.log(payload);
         habitsAdapter.addOne(state, payload);
       })
       .addCase(deleteHabit.fulfilled, (state, { payload }) => {

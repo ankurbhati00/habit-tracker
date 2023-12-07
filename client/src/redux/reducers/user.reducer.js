@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-
 //fetch the users
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (_, thunkApi) => {
-    const response = await fetch("http://localhost:8000/user/check-logedin");
-      const data = await response.json();
+    const response = await fetch("http://localhost:8000/user/check-logedin", {
+      method: "get",
+      credentials: "include",
+    });
+    const data = await response.json();
     if (response.status === 200) {
       return { status: 200, data };
     }
     return { status: response.status, data: {} };
-
-   
   }
 );
 
@@ -22,6 +22,7 @@ export const signInUser = createAsyncThunk(
   async (data, thunkApi) => {
     const response = await fetch("http://localhost:8000/user/sign-in", {
       method: "post",
+      credentials: "include",
       body: JSON.stringify(data),
       headers: {
         "content-type": "application/json",
@@ -31,18 +32,28 @@ export const signInUser = createAsyncThunk(
     if (response.status === 401) {
       return toast("Invalid password");
     } else if (response.status === 200) {
-      return {logedin:true,...user};
+      return { logedin: true, ...user };
     }
     return toast("invalid crediantials");
   }
 );
+
+//log out user
+export const logOut = createAsyncThunk("user/logout", async () => {
+  const response = await fetch("http://localhost:8000/user/log-out");
+  if (response.status === 200) {
+
+
+    return { logedin: false };
+  } else return { logedin: true };
+});
 
 const INITIAL_STATE = {
   logedin: false,
   userId: "",
   name: "",
   bedTime: "",
-  weeks:[]
+  weeks: [],
 };
 //create slice
 const userSlice = createSlice({
@@ -52,7 +63,8 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.fulfilled, (state, { payload }) => {
-        const { bedTime, userId, name,weeks } = payload;
+        const { bedTime, userId, name, weeks } = payload.data;
+
         if (payload.status === 200) {
           state.logedin = true;
           state.userId = userId;
@@ -68,8 +80,10 @@ const userSlice = createSlice({
           state.logedin = true;
           state.bedTime = payload.bedTime;
           state.weeks = payload.weeks;
-
         }
+      })
+      .addCase(logOut.fulfilled, (state, {payload}) => {
+        state.logedin = payload.logedin;
       });
   },
 });

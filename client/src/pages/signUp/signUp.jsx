@@ -4,8 +4,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userSelector } from "../../redux/reducers/user.reducer";
+import { useSelector ,useDispatch} from "react-redux";
+import { useEffect } from "react";
+import { fetchUser } from "../../redux/reducers/user.reducer";
 export default function SignUp() {
+  const user = useSelector(userSelector);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //fetch is user loged in or not
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+
+  //if loged in redirect to home
+  useEffect(() => {
+    if (user.logedin) {
+      navigate("/");
+    }
+  }, [user]);
+
   //sign up the user
   const signUp = async (e) => {
     e.preventDefault();
@@ -21,7 +40,7 @@ export default function SignUp() {
       password: password,
     };
     try {
-    const response =  await fetch("http://localhost:8000/user/sign-up", {
+      const response = await fetch("http://localhost:8000/user/sign-up", {
         method: "post",
         body: JSON.stringify(data),
         headers: {

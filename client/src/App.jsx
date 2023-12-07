@@ -12,14 +12,18 @@ import { userSelector } from "./redux/reducers/user.reducer.js";
 
 function App() {
   const [AddHabitCardView, setAddHabitCardView] = useState(false);
-  const { weeks,userId } = useSelector(userSelector);
+  const { weeks, userId } = useSelector(userSelector);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadHabits(userId));
+    
   }, []);
   //set weeks to state
   useEffect(() => {
-    dispatch(weeklyHabitsActions.setWeeks(weeks));
+    if (weeks) {
+      
+      dispatch(weeklyHabitsActions.setWeeks(weeks));
+    }
   }, [weeks]);
   const handleAddHabit = () => {
     setAddHabitCardView(!AddHabitCardView);
