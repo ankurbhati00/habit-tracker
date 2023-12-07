@@ -37,13 +37,13 @@ export default function WeeklyProgressBars({ currentWeek }) {
       {habits.map((habit) => (
         <div className={style.habit_progress}>
           <div className={style.habit_name_container}>
-            <span className={style.colour_dot}></span>
+            <span className={style.colour_dot} style={{backgroundColor:habit.colour}}></span>
             <span>{habit.name}</span>
           </div>
           <div className={style.progress_bar}>
             <div
               className={style.progress}
-              style={{ width: `${progress(habit.id)}%` }}
+              style={{ width: `${progress(habit._id)}%` ,backgroundColor:habit.colour }}
             ></div>
           </div>
           <div>

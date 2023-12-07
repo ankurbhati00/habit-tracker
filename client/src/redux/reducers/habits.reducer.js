@@ -3,7 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { habits } from "../data";
+import { toast } from "react-toastify";
 const habitsAdapter = createEntityAdapter({
   selectId: (elm) => elm._id,
 });
@@ -11,8 +11,15 @@ const habitsAdapter = createEntityAdapter({
 //load data from api
 export const loadHabits = createAsyncThunk(
   "habits/loadHabits",
-  async (_, { dispatch }) => {
-    const response = await fetch("http://localhost:8000/habits");
+  async (userId, { dispatch }) => {
+    const response = await fetch("http://localhost:8000/habits", {
+      method: "post",
+      body: JSON.stringify({ userId }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    console.log("loadhabits", response);
     const data = await response.json();
     return data.habits;
   }
@@ -29,9 +36,29 @@ export const addHabit = createAsyncThunk(
         "content-type": "application/json",
       },
     });
-    const {habit} = await response.json();
-
+    const { habit } = await response.json();
+    toast("Added successfuly.");
     return habit;
+  }
+);
+
+//delete habits
+export const deleteHabit = createAsyncThunk(
+  "habits/delete",
+  async (habitId, _) => {
+    const response = await fetch("http://localhost:8000/habits/delete", {
+      method: "delete",
+      body: JSON.stringify({ habitId }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    //if habit deleted successfuly from db
+    if (response.status === 201) {
+      toast("Deleted successfuly.");
+      return habitId;
+    }
+    return toast("Internal server Error");
   }
 );
 
@@ -51,8 +78,12 @@ const habitsSlice = createSlice({
       .addCase(addHabit.fulfilled, (state, { payload }) => {
         //add habit to entityAdapter
         console.log(payload);
-          habitsAdapter.addOne(state, payload);
-        
+        habitsAdapter.addOne(state, payload);
+      })
+      .addCase(deleteHabit.fulfilled, (state, { payload }) => {
+        if (payload) {
+          habitsAdapter.removeOne(state, payload);
+        }
       });
   },
 });

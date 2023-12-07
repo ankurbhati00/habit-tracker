@@ -3,13 +3,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { WeeklyActivityCard } from "./weeklyActivityCard";
 import { MonthlyActivityCard } from "./monthlyActivityCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../redux/reducers/user.reducer";
 export default function DashboardLeft({ handleAddHabit }) {
   const [currentView, setCurrentView] = useState("week");
+  const user = useSelector(userSelector);
+  const [greet, setGreet] = useState("Good morning");
+  useEffect(() => {
+    const hour = new Date().getHours();
+    const min = new Date().getMinutes();
+    if (hour <= 12) {
+      if (hour === 12) {
+        setGreet("Good afternoon");
+      } else {
+        setGreet("Good morning");
+      }
+    } else if (hour > 12 && hour <= 16) {
+      setGreet("Good afternoon");
+    } else if (hour > 16 && hour < 21) {
+      setGreet("Good evening");
+    } else {
+      setGreet("Good night");
+    }
+  }, []);
+
   return (
     <section className={style.dashboard_left}>
       <div className={style.dashboard_left_header}>
-        <h1>Good afternoon , Ankur</h1>
+        <h1>
+          {greet} , <span className={style.user_name}>{user.name}</span>
+        </h1>
         <button className={style.bedtime_btn}>Add Your bedtime</button>
       </div>
       {/* show details by week month and yearly */}

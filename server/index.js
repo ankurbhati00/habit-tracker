@@ -30,8 +30,11 @@ App.use(
     }),
   })
 );
+
+
+
 App.use("/user", userRouter);
-App.use('/habits', habitsRouter);
+App.use("/habits", habitsRouter);
 
 //start server on this PORT
 App.listen(PORT, (err) => {

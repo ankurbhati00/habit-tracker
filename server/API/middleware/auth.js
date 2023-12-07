@@ -5,7 +5,6 @@ export async function validate(req, res, next) {
 
   if (req.session.user) {
     const user = await User.findById(req.session.user);
-    console.log("validating user..", user);
 
     return res.status(405).json({
       logedin: true,

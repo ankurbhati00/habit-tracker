@@ -1,10 +1,12 @@
 import style from "./styles/addHabitCard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { addHabit } from "../redux/reducers/habits.reducer.js";
 import { useRef } from "react";
+import { userSelector } from "../redux/reducers/user.reducer.js";
 export default function AddHabitCard({ handleAddHabit }) {
+  const { userId } = useSelector(userSelector);
   const dispatch = useDispatch();
   const nameRef = useRef();
   const typeRef = useRef();
@@ -14,6 +16,7 @@ export default function AddHabitCard({ handleAddHabit }) {
     e.preventDefault();
     //specify the habit details
     const habit = {
+      userId,
       name: nameRef.current.value,
       started: String(new Date()).slice(0, 15),
       type: typeRef.current.checked ? "to-do" : "not-to-do",

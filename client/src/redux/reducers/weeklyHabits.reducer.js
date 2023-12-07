@@ -3,16 +3,15 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
-import { dates } from "../data";
+
 const weeklyHabitsAdapter = createEntityAdapter({
   selectId: (elm) => elm.id,
 });
 
-
 //mark habits as done not done
 export const markHabit = createAsyncThunk(
   "weeklyHabits/markHabit",
-  ({ currentWeek, date, habitId }, { dispatch }) => {
+  async ({ currentWeek, date, habitId, userId }, { dispatch }) => {
     const currentWeekId = currentWeek.id;
     let modifiedWeek = { ...currentWeek };
     //toggle the mark
@@ -22,12 +21,22 @@ export const markHabit = createAsyncThunk(
       let tempArr = [...modifiedWeek[date]];
       tempArr.splice(i, 1);
       modifiedWeek[date] = tempArr;
-      return { modifiedWeek, currentWeekId };
     } else {
       //habit is not present
       modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
+    }
+//mark to the server database
+    const response = await fetch("http://localhost:8000/habits/mark", {
+      method: "post",
+      body: JSON.stringify({ modifiedWeek, currentWeekId, userId }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    if (response.status === 201) {
       return { modifiedWeek, currentWeekId };
     }
+    return toast("Internal Server Error !");
   }
 );
 
@@ -55,6 +64,6 @@ const weeklyHabitsSlice = createSlice({
 export const weeklyHabitsSelector = weeklyHabitsAdapter.getSelectors(
   (state) => state.weeklyHabits
 );
-//actions 
+//actions
 export const weeklyHabitsActions = weeklyHabitsSlice.actions;
 export const weeklyHabitsReducer = weeklyHabitsSlice.reducer;

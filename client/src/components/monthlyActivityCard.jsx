@@ -9,11 +9,9 @@ import {
   faAngleLeft,
   faAngleRight,
   faBarsStaggered,
-  faGrip,
 } from "@fortawesome/free-solid-svg-icons";
 
 export function MonthlyActivityCard() {
-  const value = useSelector(habitsSelector.selectTotal);
   const allHabits = useSelector(weeklyHabitsSelector.selectAll);
   const [currentMonth, setCurrentMonth] = useState(null);
   const [currentMonthsHabit, setCurrentMonthsHabit] = useState({});

@@ -59,7 +59,6 @@ export function WeeklyActivityCard() {
     } else {
       //dont go next week no sense to go next week
       const currentDate = String(new Date()).slice(0, 15);
-      console.log(weeks[currentWeekIndex][currentDate]);
       if (weeks[currentWeekIndex][currentDate] !== undefined) {
         return;
       }

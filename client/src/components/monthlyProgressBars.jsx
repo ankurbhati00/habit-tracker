@@ -34,12 +34,12 @@ export default function MonthlyProgressBars({ currentMonthsHabit }) {
           <div className={style.progress_bar}>
             <div
               className={style.progress}
-              style={{ width: `${progress(habit.id)}%` }}
+              style={{ width: `${progress(habit._id)}%`,backgroundColor:habit.colour }}
             ></div>
           </div>
           <div>
             {/* show the habit progress */}
-            {`${countDay(habit.id)}/${daysInMonth}`}
+            {`${countDay(habit._id)}/${daysInMonth}`}
           </div>
         </div>
       ))}

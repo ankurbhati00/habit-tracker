@@ -1,6 +1,9 @@
 import mongoose from "../../config/mongoose/mongoose.config.js";
 
 const habitSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+  },
   name: {
     type: String,
   },

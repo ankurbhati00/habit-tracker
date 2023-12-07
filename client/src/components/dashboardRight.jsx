@@ -9,14 +9,15 @@ import {
   weeklyHabitsSelector,
 } from "../redux/reducers/weeklyHabits.reducer.js";
 import { useEffect, useState } from "react";
+import { userSelector } from "../redux/reducers/user.reducer.js";
 
 export default function DashboardRight() {
   const allHabits = useSelector(habitsSelector.selectAll);
   const [currentDate, setCurrentDate] = useState(null);
   const [currentDay, setCurrentDay] = useState();
   const [currentMonth, setCurrentMonth] = useState();
-  const [currentWeek, setCurrentWeek] = useState({});
   const weeklyHabits = useSelector(weeklyHabitsSelector.selectAll);
+  const { userId } = useSelector(userSelector);
   const dispatch = useDispatch();
   //set current date initially
   useEffect(() => {
@@ -32,16 +33,19 @@ export default function DashboardRight() {
       if (e[currentDate] !== undefined) return true;
       else return false;
     });
-    setCurrentWeek(week);
+    // setCurrentWeek(week);
   }, [currentDate]);
 
   //slide date
   const slideDate = (action) => {
     const date = new Date(currentDate);
-    
+
     if (action === "next") {
-      //check if current date is 
-      if (date.getMonth() >= new Date().getMonth()) {
+      //check if current date is
+      if (
+        date.getDate() >= new Date().getDate() &&
+        date.getMonth() >= new Date().getMonth()
+      ) {
         return;
       }
       const newDate = new Date(
@@ -70,8 +74,7 @@ export default function DashboardRight() {
   //mark habit as done
   const markHabitFunc = (currentWeek, habitId) => {
     //mark the habit
-    
-    dispatch(markHabit({ currentWeek, date: currentDate, habitId }));
+    dispatch(markHabit({ currentWeek, date: currentDate, habitId, userId }));
   };
 
   return (

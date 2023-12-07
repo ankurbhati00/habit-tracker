@@ -66,7 +66,6 @@ class userMethods {
   //logout
   logOut(req, res) {
     req.session.destroy();
-    console.log(req.session);
     return res.status(200).json({
       message: "log out successfull",
     });
@@ -74,8 +73,7 @@ class userMethods {
 
   //fetch user if already loged in on user router
   async authUser(req, res) {
-    console.log(req.cookies);
-    console.log(req.session);
+    
     if (req.session.user) {
       //check user data and send back
       const user = await User.findById(req.session.user).catch((err) =>

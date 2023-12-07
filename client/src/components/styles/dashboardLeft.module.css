@@ -9,6 +9,9 @@
 .dashboard_left_header>h1{
 font-size: 3rem;
 }
+.user_name{
+    text-transform: capitalize;
+}
 .bedtime_btn{
     border: none;
     font-size: 1.5rem;
