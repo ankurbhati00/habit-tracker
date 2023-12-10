@@ -12,7 +12,7 @@ const habitsAdapter = createEntityAdapter({
 export const loadHabits = createAsyncThunk(
   "habits/loadHabits",
   async (userId, { dispatch }) => {
-    const response = await fetch("http://localhost:8000/habits", {
+    const response = await fetch(`${process.env.api}/habits`, {
       method: "post",
       body: JSON.stringify({ userId }),
       headers: {
@@ -28,7 +28,7 @@ export const loadHabits = createAsyncThunk(
 export const addHabit = createAsyncThunk(
   "habits/addHabit",
   async (data, { dispatch }) => {
-    const response = await fetch("http://localhost:8000/habits/add", {
+    const response = await fetch(`${process.env.api}/habits/add`, {
       method: "post",
       body: JSON.stringify(data),
       headers: {
@@ -45,7 +45,7 @@ export const addHabit = createAsyncThunk(
 export const deleteHabit = createAsyncThunk(
   "habits/delete",
   async (habitId, _) => {
-    const response = await fetch("http://localhost:8000/habits/delete", {
+    const response = await fetch(`${process.env.api}/habits/delete`, {
       method: "delete",
       body: JSON.stringify({ habitId }),
       headers: {

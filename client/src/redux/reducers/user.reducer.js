@@ -5,7 +5,7 @@ import Cookie from "js-cookie";
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (_, thunkApi) => {
-    const response = await fetch("http://localhost:8000/user/check-logedin", {
+    const response = await fetch(`${process.env.api}/user/check-logedin`, {
       method: "get",
       credentials: "include",
     });
@@ -21,7 +21,7 @@ export const fetchUser = createAsyncThunk(
 export const signInUser = createAsyncThunk(
   "user/signInUser",
   async (data, thunkApi) => {
-    const response = await fetch("http://localhost:8000/user/sign-in", {
+    const response = await fetch(`${process.env.api}/user/sign-in`, {
       method: "post",
       credentials: "include",
       body: JSON.stringify(data),
@@ -41,7 +41,7 @@ export const signInUser = createAsyncThunk(
 
 //log out user
 export const logOut = createAsyncThunk("user/logout", async () => {
-  const response = await fetch("http://localhost:8000/user/log-out");
+  const response = await fetch(`${process.env.api}/user/log-out`);
   if (response.status === 200) {
     // remove current session
     Cookie.remove("user_sid");

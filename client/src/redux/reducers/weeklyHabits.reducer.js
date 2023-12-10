@@ -26,7 +26,7 @@ export const markHabit = createAsyncThunk(
       modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
     }
 //mark to the server database
-    const response = await fetch("http://localhost:8000/habits/mark", {
+    const response = await fetch(`${process.env.api}/habits/mark`, {
       method: "post",
       body: JSON.stringify({ modifiedWeek, currentWeekId, userId }),
       headers: {
