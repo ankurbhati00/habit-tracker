@@ -11,7 +11,7 @@ dotenv.config();
 const App = express();
 const PORT = process.env.PORT;
 App.use(cors({
-  origin:["http://localhost:5173"],
+  origin:"http://localhost:5173",
   methods: ["GET", "POST", "DELETE"],
   credentials:true
 }));
@@ -28,6 +28,7 @@ App.use(
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       secure: false,
+      httpOnly:false
     },
     store: MongoStore.create({
       mongoUrl: process.env.mongoUrl,

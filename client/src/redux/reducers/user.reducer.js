@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import Cookie from "js-cookie";
 //fetch the users
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
@@ -42,8 +43,8 @@ export const signInUser = createAsyncThunk(
 export const logOut = createAsyncThunk("user/logout", async () => {
   const response = await fetch("http://localhost:8000/user/log-out");
   if (response.status === 200) {
-
-
+    // remove current session
+    Cookie.remove("user_sid");
     return { logedin: false };
   } else return { logedin: true };
 });
@@ -54,6 +55,7 @@ const INITIAL_STATE = {
   name: "",
   bedTime: "",
   weeks: [],
+  loading: true,
 };
 //create slice
 const userSlice = createSlice({
@@ -64,7 +66,6 @@ const userSlice = createSlice({
     builder
       .addCase(fetchUser.fulfilled, (state, { payload }) => {
         const { bedTime, userId, name, weeks } = payload.data;
-
         if (payload.status === 200) {
           state.logedin = true;
           state.userId = userId;
@@ -72,6 +73,10 @@ const userSlice = createSlice({
           state.bedTime = bedTime;
           state.weeks = weeks;
         }
+        state.loading = false;
+      })
+      .addCase(fetchUser.rejected, (state, { payload }) => {
+        state.loading = false;
       })
       .addCase(signInUser.fulfilled, (state, { payload }) => {
         if (payload.logedin) {
@@ -82,7 +87,7 @@ const userSlice = createSlice({
           state.weeks = payload.weeks;
         }
       })
-      .addCase(logOut.fulfilled, (state, {payload}) => {
+      .addCase(logOut.fulfilled, (state, { payload }) => {
         state.logedin = payload.logedin;
       });
   },

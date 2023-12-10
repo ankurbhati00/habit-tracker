@@ -23,7 +23,7 @@ class userMethods {
       name: req.body.name,
       email: req.body.email,
       password: hashPassword,
-      weeks:weeks
+      weeks: weeks,
     }).catch((err) => console.log(err));
     console.log("sign up successfull");
     return res.status(200).send({
@@ -35,25 +35,23 @@ class userMethods {
   //sign up user
   async SignIn(req, res) {
     //find the user into db
-    console.log(req.sessionID,"login");
+    console.log(req.sessionID, "login");
 
     const user = await User.findOne({ email: req.body.email });
     //match the hashed password from db
     if (user) {
       const match = bcrypt.compareSync(req.body.password, user.password);
       if (match) {
-        // console.log(user, match);
         //set the sessions
         req.session.user = user.id;
-        req.session.authorized = true;
         // req.session.save();
         console.log("sign in successful", req.session);
         return res.status(200).json({
           userId: user.id,
           name: user.name,
           bedTime: user.bedTime,
-          weeks:user.weeks,
-          message: "sign in successfuly"
+          weeks: user.weeks,
+          message: "sign in successfuly",
         });
       }
       return res.status(401).json({
@@ -67,16 +65,18 @@ class userMethods {
 
   //logout
   async logOut(req, res) {
-   req.session.destroy();
-    return res.status(200).json({
-      message: "log out successfull",
-      
-    });
+    
+
+      req.session.destroy();
+    
+      return res.status(200).json({
+        message: "log out successfull",
+
+      });
   }
 
   //fetch user if already loged in on user router
   async authUser(req, res) {
-    console.log(req.sessionID,"authUser");
     if (req.session.user) {
       //check user data and send back
       const user = await User.findById(req.session.user).catch((err) =>
@@ -84,7 +84,7 @@ class userMethods {
       );
       if (user) {
         return res.status(200).json({
-          weeks:user.weeks,
+          weeks: user.weeks,
           name: user.name,
           userId: user.id,
           bedTime: user.bedTime,
@@ -95,6 +95,7 @@ class userMethods {
       message: "User not found.",
     });
   }
+  
 }
 
 export const userController = new userMethods();

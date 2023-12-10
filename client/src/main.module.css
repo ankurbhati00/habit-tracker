@@ -1,0 +1,11 @@
+*{
+  margin: 0;
+  
+}
+
+.loader{
+  position: absolute;
+  left: 48vw;
+  margin-top: 35vh;
+  transform: scale(1.4) !important;
+}
