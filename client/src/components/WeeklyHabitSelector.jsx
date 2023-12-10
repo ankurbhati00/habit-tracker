@@ -1,4 +1,4 @@
-import style from "./styles/WeeklyHabitSelector.module.css";
+import style from "./styles/weeklyHabitSelector.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { habitsSelector } from "../redux/reducers/habits.reducer.js";
 import { markHabit } from "../redux/reducers/weeklyHabits.reducer.js";
@@ -62,14 +62,14 @@ export default function WeeklyHabitSelector({ currentWeek }) {
       <tbody>
         {/* list all the habits to the container */}
         {habits.map((habit) => (
-          <tr key={habit._id} className={style.habit_container}>
+          <tr key={habit._id} >
             <td>
               <span
                 className={style.colour_dot}
                 // change background colour according to habit
                 style={{ backgroundColor: habit.colour }}
               ></span>
-              <span className={style.habit_name}>{habit.name}</span>
+              <span >{habit.name}</span>
             </td>
             <td className={style.habit_checkbox_container}>
               <div
