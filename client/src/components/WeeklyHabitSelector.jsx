@@ -48,13 +48,14 @@ export default function WeeklyHabitSelector({ currentWeek }) {
       <thead>
         <tr>
           <td></td>
-          <td>Mon</td>
-          <td>Tue</td>
-          <td>Wed</td>
-          <td>Thu</td>
-          <td>Fri</td>
-          <td>Sat</td>
-          <td>Sun</td>
+          <td>{days[0].substring(0, 3)}</td>
+          <td>{days[2].substring(0, 3)}</td>
+          <td>{days[3].substring(0, 3)}</td>
+          <td>{days[4].substring(0, 3)}</td>
+          <td>{days[5].substring(0, 3)}</td>
+          <td>{days[6].substring(0, 3)}</td>
+          <td>{days[7].substring(0, 3)}</td>
+
           <td></td>
         </tr>
       </thead>

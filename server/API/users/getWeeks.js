@@ -27,7 +27,7 @@ var today = new Date();
 const start = new Date(
   today.getFullYear(),
   today.getMonth(),
-  today.getDate() - (today.getDay() - 1)
+  today.getDate() - (today.getDay() == 0 ? today.getDay() : today.getDay() - 1)
 );
 export const weeks = getWeeks(
   start,
