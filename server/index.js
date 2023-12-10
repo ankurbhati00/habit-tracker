@@ -10,11 +10,13 @@ import { habitsRouter } from "./API/habits/habits.routers.js";
 dotenv.config();
 const App = express();
 const PORT = process.env.PORT;
-App.use(cors({
-  origin:"http://localhost:5173",
-  methods: ["GET", "POST", "DELETE"],
-  credentials:true
-}));
+App.use(
+  cors({
+    origin: process.env.origin,
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true,
+  })
+);
 App.use(cookieParser());
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
@@ -28,15 +30,13 @@ App.use(
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       secure: false,
-      httpOnly:false
+      httpOnly: false,
     },
     store: MongoStore.create({
       mongoUrl: process.env.mongoUrl,
     }),
   })
 );
-
-
 
 App.use("/user", userRouter);
 App.use("/habits", habitsRouter);
