@@ -15,6 +15,7 @@ App.use(
     origin: process.env.origin,
     methods: ["GET", "POST", "DELETE"],
     credentials: true,
+    
   })
 );
 App.use(cookieParser());
@@ -29,8 +30,8 @@ App.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: false,
-      httpOnly: false,
+      secure: false
+      // httpOnly: false,
     },
     store: MongoStore.create({
       mongoUrl: process.env.mongoUrl,
