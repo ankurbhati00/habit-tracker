@@ -40,7 +40,7 @@ export default function SignUp() {
       password: password,
     };
     try {
-      const response = await fetch("http://localhost:8000/user/sign-up", {
+      const response = await fetch(`${import.meta.env.VITE_API}/user/sign-up`, {
         method: "post",
         body: JSON.stringify(data),
         headers: {
