@@ -2,6 +2,8 @@ import { User } from "./user.modal.js";
 import { weeks } from "./getWeeks.js";
 import bcrypt from "bcrypt";
 const saltRounds = 10;
+import jwt from "jsonwebtoken";
+
 class userMethods {
   constructor() {}
 
@@ -32,25 +34,23 @@ class userMethods {
     });
   }
 
-  //sign up user
+  //sign in user
   async SignIn(req, res) {
     //find the user into db
-    console.log(req.sessionID, "login");
-
     const user = await User.findOne({ email: req.body.email });
     //match the hashed password from db
     if (user) {
       const match = bcrypt.compareSync(req.body.password, user.password);
       if (match) {
-        //set the sessions
-        req.session.user = user.id;
-        // req.session.save();
-        console.log("sign in successful", req.session);
+        const token = jwt.sign({ userId: user.id }, "#8se34w&#$^&@#UBE@", {
+          expiresIn: "15d",
+        });
         return res.status(200).json({
           userId: user.id,
           name: user.name,
           bedTime: user.bedTime,
           weeks: user.weeks,
+          token,
           message: "sign in successfuly",
         });
       }
@@ -63,23 +63,19 @@ class userMethods {
     });
   }
 
-  //logout
-  async logOut(req, res) {
-    
-
-      req.session.destroy();
-    
-      return res.status(200).json({
-        message: "log out successfull",
-
-      });
-  }
-
   //fetch user if already loged in on user router
   async authUser(req, res) {
-    if (req.session.user) {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+    //decode data
+    try {
+      const data = jwt.verify(token, "#8se34w&#$^&@#UBE@");
       //check user data and send back
-      const user = await User.findById(req.session.user).catch((err) =>
+      const user = await User.findById(data.userId).catch((err) =>
         console.log(err)
       );
       if (user) {
@@ -90,12 +86,14 @@ class userMethods {
           bedTime: user.bedTime,
         });
       }
+    } catch (error) {
+      console.log(error);
     }
+
     return res.status(404).json({
       message: "User not found.",
     });
   }
-  
 }
 
 export const userController = new userMethods();

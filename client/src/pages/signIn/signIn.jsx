@@ -52,13 +52,13 @@ export default function SignIn() {
           />
           <button className={style.signIn_btn}>Sign in</button>
         </form>
-        <a href="/" className={style.forgot_password_text}>
+        {/* <a href="/" className={style.forgot_password_text}>
           forgot your password?
-        </a>
-        <button className={style.signin_with_google}>
+        </a> */}
+        {/* <button className={style.signin_with_google}>
           <img src={google_logo} className={style.google_logo} />
           Sign In with Google
-        </button>
+        </button> */}
         <div className={style.footer_container}>
           Don't have an account? &nbsp;<Link to="/sign-up">Sign Up</Link>
         </div>

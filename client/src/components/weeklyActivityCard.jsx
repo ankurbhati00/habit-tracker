@@ -19,7 +19,7 @@ export function WeeklyActivityCard() {
   const [currentWeekIndex, setCurrentWeekIndex] = useState();
   const [currentWeek, setCurrentWeek] = useState(weeks[currentWeekIndex]);
   const [currentView, setCurrentView] = useState("graph"); //set current view and toggle to grid and progress bars
-
+  // const [achived, setAchived] = useState();
   const allHabits = useSelector(habitsSelector.selectAll);
 
   useEffect(() => {
@@ -36,15 +36,21 @@ export function WeeklyActivityCard() {
     }
   }, [weeks]);
 
-  //filter the habits which is created before and within this week
-  // let date1 = new Date(currentWeek?.end).getTime();
-  // const habits = allHabits.filter((elm) => {
-  //   // habits start date
-  //   let date2 = new Date(elm.started).getTime();
-  //   if (date2 <= date1) {
-  //     return true;
+  // //set achived
+  // useEffect(() => {
+  //   if (currentWeek) {
+  //     console.log(currentWeek);
+  //     const totalHabit = allHabits.length * 7;
+  //     let totalDone = 0;
+  //     for (let h of Object.values(currentWeek)) {
+  //       if (typeof h !== "object") continue;
+  //       totalDone += h.length;
+  //     }
+  //     console.log('total habits', totalDone)
+
+  //     const persent = (totalDone / totalHabit) * 100;
+  //     setAchived(parseFloat(String(persent).slice(0, 4)));
   //   }
-  //   return false;
   // });
 
   const handleWeeks = (args) => {
@@ -69,17 +75,6 @@ export function WeeklyActivityCard() {
     }
   };
 
-  //check the habits goal achived in a week
-  // const habitsAchived = () => {
-  //   //total days of habits to done or not done
-  //   const totalDays = habits.length * 7;
-  //   let markDays = 0;
-  //   for (let arr in Object.values(currentWeek)) {
-  //     markDays += arr.length;
-  //   }
-  //   console.log("total days " + totalDays + "markdays " + markDays);
-  // };
-  // habitsAchived();
   return (
     <>
       <div className={style.week_range_container}>
@@ -126,7 +121,7 @@ export function WeeklyActivityCard() {
         <div className={style.progress_bar}>
           <div className={style.progress}></div>
         </div>
-        <div className={style.progress_achived}>78% achived</div>
+        <div className={style.progress_achived}>{`${achived}%  achived`}</div>
       </div> */}
       <hr style={{ marginTop: "15px" }} />
       {currentWeek && currentView == "graph" ? (

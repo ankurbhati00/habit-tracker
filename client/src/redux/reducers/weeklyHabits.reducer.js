@@ -3,6 +3,7 @@ import {
   createEntityAdapter,
   createSlice,
 } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const weeklyHabitsAdapter = createEntityAdapter({
   selectId: (elm) => elm.id,
@@ -26,17 +27,17 @@ export const markHabit = createAsyncThunk(
       modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
     }
 //mark to the server database
-    const response = await fetch(`${import.meta.env.VITE_API}/habits/mark`, {
+    const response =  fetch(`${import.meta.env.VITE_API}/habits/mark`, {
       method: "post",
       body: JSON.stringify({ modifiedWeek, currentWeekId, userId }),
       headers: {
         "content-type": "application/json",
       },
-    });
-    if (response.status === 201) {
+    }).catch(err=>toast(err));
+    // if (response.status === 201) {
       return { modifiedWeek, currentWeekId };
-    }
-    return toast("Internal Server Error !");
+    // }
+    // return toast("Internal Server Error !");
   }
 );
 

@@ -31,7 +31,7 @@ const IsLogedIn = ({ children }) => {
   if (user.logedin ) {
     return <>{children}</>;
   } else if (!user.logedin && !user.loading) {
-    return <Navigate to="/sign-up" />;
+    return <Navigate to="/sign-in" />;
   } else if (!user.logedin && user.loading) {
     return <HashLoader className={style.loader} />
   }

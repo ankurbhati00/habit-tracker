@@ -1,14 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import Cookie from "js-cookie";
 //fetch the users
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (_, thunkApi) => {
-    const response = await fetch(`${import.meta.env.VITE_API}/user/check-logedin`, {
-      method: "get",
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API}/user/check-logedin`,
+      {
+        method: "get",
+        credentials: "include",
+        headers: {
+          authorization: localStorage.getItem("user_token"),
+        },
+      }
+    );
     const data = await response.json();
     if (response.status === 200) {
       return { status: 200, data };
@@ -33,6 +38,8 @@ export const signInUser = createAsyncThunk(
     if (response.status === 401) {
       return toast("Invalid password");
     } else if (response.status === 200) {
+      //set user id to localstorage
+      localStorage.setItem("user_token", user.token);
       return { logedin: true, ...user };
     }
     return toast("invalid crediantials");
@@ -41,12 +48,8 @@ export const signInUser = createAsyncThunk(
 
 //log out user
 export const logOut = createAsyncThunk("user/logout", async () => {
-  const response = await fetch(`${import.meta.env.VITE_API}/user/log-out`);
-  if (response.status === 200) {
-    // remove current session
-    Cookie.remove("user_sid");
-    return { logedin: false };
-  } else return { logedin: true };
+  localStorage.setItem("user_token", "");
+  return { logedin: false };
 });
 
 const INITIAL_STATE = {

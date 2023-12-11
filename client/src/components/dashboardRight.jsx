@@ -10,6 +10,7 @@ import {
 } from "../redux/reducers/weeklyHabits.reducer.js";
 import { useEffect, useState } from "react";
 import { userSelector } from "../redux/reducers/user.reducer.js";
+import confetti from "canvas-confetti";
 
 export default function DashboardRight() {
   const allHabits = useSelector(habitsSelector.selectAll);
@@ -73,6 +74,11 @@ export default function DashboardRight() {
 
   //mark habit as done
   const markHabitFunc = (currentWeek, habitId) => {
+    //show confetti effect
+    confetti({
+      particleCount: 140,
+      spread: 180,
+    });
     //mark the habit
     dispatch(markHabit({ currentWeek, date: currentDate, habitId, userId }));
   };

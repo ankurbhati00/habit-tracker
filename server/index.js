@@ -1,6 +1,4 @@
 import express from "express";
-import session from "express-session";
-import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
 import cors from "cors";
 import { userRouter } from "./API/users/user.routers.js";
@@ -21,23 +19,7 @@ App.use(
 App.use(cookieParser());
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
-//set sessions
-App.use(
-  session({
-    key: "user_sid",
-    secret: process.env.sessionSecret,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: false
-      // httpOnly: false,
-    },
-    store: MongoStore.create({
-      mongoUrl: process.env.mongoUrl,
-    }),
-  })
-);
+
 
 App.use("/user", userRouter);
 App.use("/habits", habitsRouter);

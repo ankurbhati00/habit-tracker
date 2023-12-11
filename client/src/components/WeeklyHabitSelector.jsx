@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { habitsSelector } from "../redux/reducers/habits.reducer.js";
 import { markHabit } from "../redux/reducers/weeklyHabits.reducer.js";
 import { userSelector } from "../redux/reducers/user.reducer.js";
+import { toast } from "react-toastify";
+import confetti from "canvas-confetti";
 export default function WeeklyHabitSelector({ currentWeek }) {
   const dispatch = useDispatch();
   const { userId } = useSelector(userSelector);
@@ -27,9 +29,14 @@ export default function WeeklyHabitSelector({ currentWeek }) {
 
     //dont mark next days habits
     if (new Date().getTime() < new Date(date).getTime()) {
+      toast("Can not mark nex day's habit !");
       return;
     }
-
+    //show confetti effect
+    confetti({
+      particleCount: 140,
+      spread: 180,
+    });
     dispatch(markHabit({ currentWeek, date, habitId, userId }));
   };
 
@@ -62,14 +69,14 @@ export default function WeeklyHabitSelector({ currentWeek }) {
       <tbody>
         {/* list all the habits to the container */}
         {habits.map((habit) => (
-          <tr key={habit._id} >
+          <tr key={habit._id}>
             <td>
               <span
                 className={style.colour_dot}
                 // change background colour according to habit
                 style={{ backgroundColor: habit.colour }}
               ></span>
-              <span >{habit.name}</span>
+              <span>{habit.name}</span>
             </td>
             <td className={style.habit_checkbox_container}>
               <div

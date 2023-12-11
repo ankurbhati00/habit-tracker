@@ -34,7 +34,7 @@ export default function DashboardLeft({ handleAddHabit }) {
         <h1>
           {greet} , <span className={style.user_name}>{user.name}</span>
         </h1>
-        <button className={style.bedtime_btn}>Add Your bedtime</button>
+        {/* <button className={style.bedtime_btn}>Add Your bedtime</button> */}
       </div>
       {/* show details by week month and yearly */}
       <div className={style.date_range_container}>

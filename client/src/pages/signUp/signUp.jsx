@@ -96,10 +96,10 @@ export default function SignUp() {
           <button className={style.signUp_btn}>Sign Up</button>
         </form>
 
-        <button className={style.signUp_with_google}>
+        {/* <button className={style.signUp_with_google}>
           <img src={google_logo} className={style.google_logo} />
           Sign Up with Google
-        </button>
+        </button> */}
         <div className={style.footer_container}>
           Already have an account? &nbsp;<Link to="/sign-in">Sign In</Link>
         </div>
