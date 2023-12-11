@@ -71,6 +71,7 @@ const habitsSlice = createSlice({
     //set loaded data to entity adapter
     builder
       .addCase(loadHabits.fulfilled, (state, { payload }) => {
+
         habitsAdapter.setMany(state, payload);
       })
       //add new habits to states

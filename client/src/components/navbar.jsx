@@ -8,6 +8,8 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logOut());
+    //reset the previous state
+    location.reload('/');
   };
 
   return (

@@ -92,6 +92,8 @@ const userSlice = createSlice({
       })
       .addCase(logOut.fulfilled, (state, { payload }) => {
         state.logedin = payload.logedin;
+        state.userId = '';
+        state.weeks = [];
       });
   },
 });

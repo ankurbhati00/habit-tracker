@@ -28,7 +28,7 @@ const IsLogedIn = ({ children }) => {
   //if alredy loged in
   //else return landing home page
  
-  if (user.logedin ) {
+  if (user.logedin) {
     return <>{children}</>;
   } else if (!user.logedin && !user.loading) {
     return <Navigate to="/sign-in" />;
