@@ -33,7 +33,7 @@ const IsLogedIn = ({ children }) => {
   } else if (!user.logedin && !user.loading) {
     return <Navigate to="/sign-in" />;
   } else if (!user.logedin && user.loading) {
-    return <HashLoader className={style.loader} />
+    return <HashLoader color="rgb(197, 181, 181)" className={style.loader} />;
   }
 };
 
