@@ -14,7 +14,7 @@ import NavBar from "./components/navbar.jsx";
 import SignUp from "./pages/signUp/signUp.jsx";
 import Home from "./pages/home/home.jsx";
 import { useSelector } from "react-redux";
-import HashLoader from "react-spinners/HashLoader.js";
+import GridLoader from 'react-spinners/GridLoader.js'
 import { fetchUser, userSelector } from "./redux/reducers/user.reducer.js";
 import style from "./main.module.css"
 //check loged in user
@@ -33,7 +33,7 @@ const IsLogedIn = ({ children }) => {
   } else if (!user.logedin && !user.loading) {
     return <Navigate to="/sign-in" />;
   } else if (!user.logedin && user.loading) {
-    return <HashLoader color="rgb(197, 181, 181)" className={style.loader} />;
+    return <GridLoader color="#36d7b7" className={style.loader} />;
   }
 };
 
