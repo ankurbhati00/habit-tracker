@@ -8,9 +8,9 @@ export const fetchUser = createAsyncThunk(
       `${import.meta.env.VITE_API}/user/check-logedin`,
       {
         method: "get",
-        credentials: "include",
         headers: {
           authorization: localStorage.getItem("user_token"),
+          "Access-Control-Allow-Origin": "*",
         },
       }
     );
@@ -28,10 +28,10 @@ export const signInUser = createAsyncThunk(
   async (data, thunkApi) => {
     const response = await fetch(`${import.meta.env.VITE_API}/user/sign-in`, {
       method: "post",
-      credentials: "include",
       body: JSON.stringify(data),
       headers: {
         "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     });
     const user = await response.json();
@@ -92,7 +92,7 @@ const userSlice = createSlice({
       })
       .addCase(logOut.fulfilled, (state, { payload }) => {
         state.logedin = payload.logedin;
-        state.userId = '';
+        state.userId = "";
         state.weeks = [];
       });
   },

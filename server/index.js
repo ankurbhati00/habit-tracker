@@ -13,7 +13,6 @@ App.use(cookieParser());
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 
-
 App.use("/user", userRouter);
 App.use("/habits", habitsRouter);
 

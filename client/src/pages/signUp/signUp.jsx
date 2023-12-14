@@ -45,6 +45,7 @@ export default function SignUp() {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
       });
       //when user is already present

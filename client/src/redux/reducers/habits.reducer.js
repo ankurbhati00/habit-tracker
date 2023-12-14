@@ -17,6 +17,7 @@ export const loadHabits = createAsyncThunk(
       body: JSON.stringify({ userId }),
       headers: {
         "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     });
     const data = await response.json();
@@ -33,6 +34,7 @@ export const addHabit = createAsyncThunk(
       body: JSON.stringify(data),
       headers: {
         "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     });
     const { habit } = await response.json();
@@ -50,6 +52,7 @@ export const deleteHabit = createAsyncThunk(
       body: JSON.stringify({ habitId }),
       headers: {
         "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
     });
     //if habit deleted successfuly from db
@@ -71,7 +74,6 @@ const habitsSlice = createSlice({
     //set loaded data to entity adapter
     builder
       .addCase(loadHabits.fulfilled, (state, { payload }) => {
-
         habitsAdapter.setMany(state, payload);
       })
       //add new habits to states

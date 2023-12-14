@@ -27,13 +27,14 @@ export const markHabit = createAsyncThunk(
       modifiedWeek[date] = [habitId, ...modifiedWeek[date]];
     }
 //mark to the server database
-    const response =  fetch(`${import.meta.env.VITE_API}/habits/mark`, {
+    const response = fetch(`${import.meta.env.VITE_API}/habits/mark`, {
       method: "post",
       body: JSON.stringify({ modifiedWeek, currentWeekId, userId }),
       headers: {
         "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-    }).catch(err=>toast(err));
+    }).catch((err) => toast(err));
     // if (response.status === 201) {
       return { modifiedWeek, currentWeekId };
     // }
