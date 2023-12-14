@@ -8,14 +8,7 @@ import { habitsRouter } from "./API/habits/habits.routers.js";
 dotenv.config();
 const App = express();
 const PORT = process.env.PORT;
-App.use(
-  cors({
-    origin: process.env.origin,
-    methods: ["GET", "POST", "DELETE"],
-    credentials: true,
-    
-  })
-);
+App.use(cors());
 App.use(cookieParser());
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
